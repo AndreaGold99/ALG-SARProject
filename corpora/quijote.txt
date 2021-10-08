@@ -1,0 +1,1509 @@
+
+    <!DOCTYPE html>
+<html lang="es-ES" dir="ltr" class="Mrphs-html">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script>                                     var portal = {
+                "bullhorns": {
+                    "enabled": true,
+                                        "pollInterval": 240000
+                                    },
+                "chat": {
+                    "enabled": false,
+                    "pollInterval": 5000,
+                    "video" : {
+                        "enabled": true
+                    }
+                },
+                "i18n": {},
+                "loggedIn": false,
+                "portalPath": "https://poliformat.upv.es/portal",
+                "loggedOutUrl": "https://poliformat.upv.es/portal/site/!gateway-es/page/d4fdba06-3662-4820-8e8f-c151ccdea1d2",
+                "siteId": "!gateway-es",
+                "siteTitle": "Castellano",
+                "shortDescription" : "",
+                "toolsCollapsed":  false ,
+                "locale": "es-ES",
+                "serverTimeMillis": "1633693539215",
+                "user": {
+                    "id": "",
+                    "eid": "",
+                    "userType": "",
+                    "siteRole": "",
+                    "impersonatorDisplayId": "",
+                    "iso8601Timestamp": "2021-10-08T13:45:39.215",
+                    "timezone": "Europe/Madrid",
+                    "offsetFromServerMillis": "7200000"
+                },
+                "timeoutDialog" : {
+                "enabled": true,
+                "seconds": 360
+                },
+                "toggle" : {
+                    "allowauto": false,
+                    "tools": false,
+                    "sitenav": false // This is not allowed in morpheus
+                },
+                "pageScriptPath" : "/library/js/",
+                "editor" : {
+                    "type": "",
+                },
+                "portalCDNQuery" : "?version=20210916"
+            };
+        </script>
+
+            <!-- Head material from Tool in PDA mode (will include title and headscripts) -->
+    
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <META CONTENT="NO-CACHE" HTTP-EQUIV="CACHE-CONTROL"/>
+ 
+ <link href="/library/skin/tool_base.css?version=20210916" type="text/css" rel="stylesheet" media="screen, tty, tv, handheld, projection" />
+<script type="text/javascript" src="/library/js/headscripts.js?version=20210916"></script>
+<script type="text/javascript">var sakai = sakai || {}; sakai.editor = sakai.editor || {}; sakai.editor.editors = sakai.editor.editors || {}; sakai.editor.editors.ckeditor = sakai.editor.editors.ckeditor || {}; sakai.locale = sakai.locale || {};
+sakai.locale.userCountry = 'ES';
+sakai.locale.userLanguage = 'es';
+sakai.locale.userLocale = 'es_ES';
+sakai.editor.collectionId = '/';
+sakai.editor.enableResourceSearch = true;
+sakai.editor.contentItemUrl = false;
+sakai.editor.siteToolSkin = '/library/skin/morpheus-gateway/tool.css';
+sakai.editor.sitePrintSkin = '/library/skin/morpheus-gateway/print.css';
+sakai.editor.editors.ckeditor.browser = 'elfinder';
+</script>
+<script type="text/javascript">var CKEDITOR_BASEPATH='/library/webjars/ckeditor/4.13.1/full/';
+</script>
+<script type="text/javascript" src="/library/webjars/ckeditor/4.13.1/full/ckeditor.js?version=20210916"></script>
+<script type="text/javascript" src="/library/editor/ckeditor.launch.js?version=20210916"></script>
+
+ 
+ <script  language="JavaScript" type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/rsf.js?version=20210916"></script>
+ <link rel="stylesheet" href="/library/webjars/jquery-ui-themes/1.12.1/smoothness/jquery-ui.min.css?version=20210916" type="text/css"/>	
+ 
+ 
+ <link  rel="stylesheet" href="https://poliformat.upv.es/lessonbuilder-tool/css/Simplepagetool.css?version=20210916" type="text/css"/>
+ <link  rel="stylesheet" href="https://poliformat.upv.es/lessonbuilder-tool/css/checklist.css?version=20210916" type="text/css"/>
+ 
+
+ <style type="text/css">
+	 #outer{
+		 min-height:325px;
+	 }
+	 html>body #outer{height:auto}
+ /* siteTitle is added by portal, but we don't want it */
+	 .siteTitle{display:none !important;}
+	 .pageTitle{width:auto !important;}
+ </style>
+ 
+ 
+    <!-- End of Head material from Tool -->
+ <title>PoliformaT : Castellano : Inicio</title>
+        <!--[if (lt IE 9)]>
+  <link href="/library/skin/morpheus-gateway/tool-ie.css?version=20210916" rel="stylesheet">
+<![endif]-->
+<link href="/library/skin/morpheus-gateway/tool.css?version=20210916" rel="stylesheet" media="screen, tty, tv, handheld, projection">
+<link href="/library/skin/morpheus-gateway/print.css?version=20210916" rel="stylesheet" media="print">        
+        <link href="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.css?version=20210916" rel="stylesheet" />  
+        <link href="/library/js/jquery/cluetip/1.2.10/css/jquery.cluetip.css?version=20210916" rel="stylesheet">
+        <link href="/library/webjars/qtip2/3.0.3-1/jquery.qtip.min.css?version=20210916" rel="stylesheet">
+        <link href="/library/webjars/cropper/4.0.0/dist/cropper.min.css?version=20210916" rel="stylesheet">
+        <link href="/library/webjars/fontawesome/4.7.0/css/font-awesome.min.css?version=20210916" rel="stylesheet">
+        <script src="/library/skin/morpheus-gateway/js/lib/modernizr.js?version=20210916"></script>
+        <script src="/webcomponents/assets/@webcomponents/webcomponentsjs/webcomponents-loader.js?version=20210916"></script>
+        <script src="/library/webjars/momentjs/2.24.0/min/moment-with-locales.min.js?version=20210916"></script>
+            <script src="/profile2-tool/javascript/profile2-eb.js?version=20210916"></script>
+            
+        <!-- inlined tool header contribution -->
+                        	        		
+        	                        <!-- end inlined tool header contribution -->
+
+                                 <link rel="icon" href="/library/icon/favicon.ico" type="image/x-icon">
+        
+    </head>
+
+    <body  class="Mrphs-portalBody is-logged-out"  >
+
+        <div id="maximised-indicator">
+            <div>
+                <a href="javascript:;">Pulse para salir de pantalla completa</a>
+            </div>
+        </div>
+
+        <noscript>
+            <span id="portal_js_warn" class="Mrphs-noJs js-warn-no-js">La plataforma funciona mucho mejor cuando JavaScript está activado. Por favor, active JavaScript en su navegador.</span>
+        </noscript>
+        
+                 
+        <div  class="Mrphs-portalWrapper">
+
+                        <nav id="skipNav" class="Mrphs-skipNav">
+    <ul class="Mrphs-skipNav__menu">
+
+                 <li class="Mrphs-skipNav__menuitem Mrphs-skipNav__menuitem--content">
+            <a href="#tocontent" class="Mrphs-skipNav__link" title="ir al contenido" accesskey="c">
+                ir al contenido
+                <span class="accesibility_key">[c]</span>
+            </a>
+        </li>
+        <li class="Mrphs-skipNav__menuitem Mrphs-skipNav__menuitem--worksite">
+            <a href="#" id="more-sites-menu" class="Mrphs-skipNav__link js-toggle-sites-nav" title="ir a la lista de sitios" accesskey="w">
+                <i class="fa fa-th all-sites-icon" aria-hidden="true"></i> Sitios
+                <span class="accesibility_key">[w]</span>
+            </a>
+        </li>
+        <li class="Mrphs-skipNav__menuitem Mrphs-skipNav__menuitem--tools">
+            <a href="#totoolmenu" class="Mrphs-skipNav__link js-toggle-tools-nav" title="ir a la lista de herramientas" accesskey="l">
+                <i class="fa fa-bars tools-icon" aria-hidden="true"></i>
+                Herramientas
+                <span class="accesibility_key">[l]</span>
+            </a>
+												<a href="https://poliformat.upv.es/portal/site/!gateway-es/tool-reset/4bd36fed-4d79-4d97-a044-f5c1b72f2339" title="Página de inicio de la herramienta" class="xs-visible Mrphs-skipNav--toolName">
+						<span class="Mrphs-breadcrumb--icon icon-sakai--sakai-lessonbuildertool "></span>
+						<span>Inicio</span>
+					</a>
+
+                    																																			        </li>
+    </ul>
+</nav>
+
+            <div  class="Mrphs-mainHeader is-maximized" >
+
+                                <div class="Mrphs-topHeader">
+                    
+<header role="banner" class="Mrphs-headerLogo">
+    <span class="Mrphs-headerLogo--institution" onclick="window.open('https://www.upv.es/');" ></span>
+    <span class="Mrphs-headerLogo--poliformat" onclick="window.open('https://poliformat.upv.es/'); "></span>
+    <span class="Mrphs-headerLogo--banner"></span>
+
+    
+<nav id="mastLogin" class="Mrphs-loginNav">
+
+    
+        
+        
+        
+        <ul id="loginLinks" class="Mrphs-userNav">
+
+                
+                     
+                        
+                     
+                        
+                     
+                         
+                            <li class="Mrphs-userNav__logout Mrphs-userNav__submenuitem-indented">
+                                <div id="loginLinksImage" class="Mrphs-loginUser">
+
+    
+        <p class="Mrphs-loginUser__menuitem">
+            <a href="https://poliformat.upv.es/portal/login" title="Identificarse" id="loginLink1" class="Mrphs-loginUser__message" data-warning="">
+                <i class="login-Icon"></i>
+                <span class="Mrphs-login-Message">Identificarse</span>
+            </a>
+        </p>
+
+     
+     
+</div>
+                            </li>
+
+                        </ul>
+
+            </li>
+
+        </ul> <!-- end of nav#loginLinks-->
+
+             
+</nav>
+</header>                </div>
+
+                                                        
+    
+    
+         
+         
+ 
+
+         
+
+         
+
+         
+ 
+<!-- START VM includeTabs.vm -->
+    <div id="Mrphs-sites-nav" class="siteNavWrap Mrphs-container Mrphs-container--navs">
+
+        <nav id="linkNav" role="navigation" aria-labelledby="sitetabs" class="Mrphs-sitesNav" data-max-tools-int="10" data-max-tools-anchor="Ver todas ...">
+    <h2 class="skip" tabindex="-1" id="sitetabs">Los sitios empiezan aquí</h2>
+    <div id="show-all-sites" tabindex="-1"><i class="fa fa-angle-double-left" aria-hidden="true"></i><span>Todos los sitios</span></div>
+    <div id="topnav_container">
+        <ul class="Mrphs-sitesNav__menu" id="topnav" aria-label="Los sitios empiezan aquí">
+
+            
+                 
+                                                    <li class="Mrphs-sitesNav__menuitem  is-selected ">
+                                                                                                    <a class="link-container" href="https://poliformat.upv.es/portal/site/!gateway-es" title="Castellano">
+                                                        <span>Castellano</span>
+                        </a>
+                        <a class="Mrphs-sitesNav__dropdown" href="#" data-site-id="!gateway-es" aria-haspopup="true" title="Abrir el menú adjunto de Castellano para acceder a sus herramientas"></a>
+                    </li>
+
+                 
+            
+                 
+                                                    <li class="Mrphs-sitesNav__menuitem ">
+                                                                                                    <a class="link-container" href="https://poliformat.upv.es/portal/site/!gateway-ca" title="Valenci&agrave;">
+                                                        <span>Valenci&agrave;</span>
+                        </a>
+                        <a class="Mrphs-sitesNav__dropdown" href="#" data-site-id="!gateway-ca" aria-haspopup="true" title="Abrir el menú adjunto de Valenci&agrave; para acceder a sus herramientas"></a>
+                    </li>
+
+                 
+            
+                 
+                                                    <li class="Mrphs-sitesNav__menuitem ">
+                                                                                                    <a class="link-container" href="https://poliformat.upv.es/portal/site/!gateway-en" title="English">
+                                                        <span>English</span>
+                        </a>
+                        <a class="Mrphs-sitesNav__dropdown" href="#" data-site-id="!gateway-en" aria-haspopup="true" title="Abrir el menú adjunto de English para acceder a sus herramientas"></a>
+                    </li>
+
+                 
+                     </ul>
+    </div>
+
+</nav> <!-- /Mrphs-sitesNav -->
+
+    </div> <!-- /end of div.tabsCssClass -->
+    
+<!-- END VM includeTabs.vm -->
+                 
+            </div>
+
+                        <!-- START VM includePageWithNav.vm -->
+
+    <div id="pageBody">
+    
+    
+        <!-- START VM includePageNav.vm -->
+
+
+<div id="toolMenuWrap" class="Mrphs-container Mrphs-container--nav-tools"  scrollingToolbarEnabled >
+
+     
+    <h2 class="skip" tabindex="-1" id="totoolmenu">Las herramientas empiezan aquí</h2>
+    <!--Added this check in to make sure that we just don't have an empty img element in the page. -->
+	
+	<div id="toolSubsitesContainer">
+		<nav id="toolMenu" role="navigation" aria-label="Las herramientas empiezan aquí" class="Mrphs-toolsNav__menu">
+			<ul>
+				
+				
+																		<li class="is-current">
+		<a class="Mrphs-toolsNav__menuitem--link "
+						    href="https://poliformat.upv.es/portal/site/!gateway-es/tool-reset/4bd36fed-4d79-4d97-a044-f5c1b72f2339"
+			            			title="Inicio - Para crear, organizar y publicar módulos de contenido y secuencias, como por ejemplo semanales."
+									aria-current="page"
+					>
+        <div class="Mrphs-toolsNav__menuitem--icon icon-sakai--sakai-lessonbuildertool  icon-active "></div>
+            			<div class="Mrphs-toolsNav__menuitem--title">Inicio</div>
+						<div class="Mrphs-toolsNav__menuitem--status-block">
+											</div>
+		</a>
+	</li>
+					 			 	
+																																		<li >
+		<a class="Mrphs-toolsNav__menuitem--link "
+						    href="https://poliformat.upv.es/portal/site/!gateway-es/page/9221fd28-84a9-4ab4-96b5-34a4b42bdb30"
+			            			title="PoliformaT apps - Para enlazar con recursos internos o sitios web externos"
+								>
+        <div class="Mrphs-toolsNav__menuitem--icon icon-sakai--sakai-iframe   "></div>
+            			<div class="Mrphs-toolsNav__menuitem--title">PoliformaT apps</div>
+						<div class="Mrphs-toolsNav__menuitem--status-block">
+											</div>
+		</a>
+	</li>
+							 						 					 			 	
+																																		<li >
+		<a class="Mrphs-toolsNav__menuitem--link "
+						    href="https://poliformat.upv.es/portal/site/!gateway-es/page/d943470d-f2a9-4d14-a20f-08ef1d42a900"
+			            			title="Incidencias - Para enlazar con recursos internos o sitios web externos"
+								>
+        <div class="Mrphs-toolsNav__menuitem--icon icon-sakai--sakai-iframe   "></div>
+            			<div class="Mrphs-toolsNav__menuitem--title">Incidencias</div>
+						<div class="Mrphs-toolsNav__menuitem--status-block">
+											</div>
+		</a>
+	</li>
+							 						 					 			 	
+																										<li >
+		<a class="Mrphs-toolsNav__menuitem--link "
+							href="javascript:;"
+								onclick="window.open('https://wiki.upv.es/confluence/pages/viewpage.action?pageId=476577803')"
+							            			title="Novedades versi&oacute;n 20 PoliformaT - Para enlazar con recursos internos o sitios web externos"
+								>
+        <div class="Mrphs-toolsNav__menuitem--icon icon-sakai--sakai-iframe   "></div>
+            			<div class="Mrphs-toolsNav__menuitem--title">Novedades versi&oacute;n 20 PoliformaT</div>
+						<div class="Mrphs-toolsNav__menuitem--status-block">
+											</div>
+		</a>
+	</li>
+						 					 			 	
+																																		<li >
+		<a class="Mrphs-toolsNav__menuitem--link "
+						    href="https://poliformat.upv.es/portal/site/!gateway-es/tool/351c5e3d-c2e5-45ba-b34b-8814e7e01e27"
+			            			title="Identificarse - Herramienta de selecion de forma de identificación en poliformaT"
+								>
+        <div class="Mrphs-toolsNav__menuitem--icon icon-sakai--upv-login   "></div>
+            			<div class="Mrphs-toolsNav__menuitem--title">Identificarse</div>
+						<div class="Mrphs-toolsNav__menuitem--status-block">
+											</div>
+		</a>
+	</li>
+							 						 					 			 	
+				 	
+			
+		 	
+				 	
+				 
+				 	
+				<li id="toolsNav-toggle-li" class="Mrphs-toolsNav__menuitem Mrphs-collapseTools  max ">
+					<button type="button" aria-pressed="false" title="Expandir/contraer navegación" class="Mrphs-toggleNav js-toggle-nav btn-link   max ">
+						<span class="fa fa-lg fa-angle-double-left" aria-hidden="true"></span>
+						<span class="sr-only">Expandir/contraer navegación</span>
+					</button>
+				</li>
+			</ul>
+		</nav>
+	
+		 	</div>
+
+	</div>
+
+<!-- END VM includePageNav.vm -->
+
+     
+    <div class="Mrphs-pagebody">
+        
+ 
+        <nav class="Mrphs-siteHierarchy">
+    <div class="Mrphs-hierarchy--sites">
+
+         
+                            <span class="Mrphs-hierarchy--siteName" title="Castellano">
+                <a href="https://poliformat.upv.es/portal/site/!gateway-es/tool-reset/4bd36fed-4d79-4d97-a044-f5c1b72f2339">
+                                        <span class="Mrphs-hierarchy--siteName-label">
+                        Castellano
+                    </span>
+                </a>
+            </span>
+            <span class="Mrphs-hierarchy--siteNameSeparator Mrphs-hierarchy--separator"><i class="fa fa-lg fa-angle-right" aria-hidden="true"></i></span>
+                                                                </div>
+
+    
+                        <a href="https://poliformat.upv.es/portal/site/!gateway-es/tool-reset/4bd36fed-4d79-4d97-a044-f5c1b72f2339" title="Página de inicio de la herramienta" class="Mrphs-hierarchy-item Mrphs-hierarchy--toolName">
+                <span class="Mrphs-breadcrumb--reset-icon fa fa-share" aria-hidden="true"></span>
+                <span class="Mrphs-breadcrumb--icon icon-sakai--sakai-lessonbuildertool "></span>
+                <span class="Mrphs-breadcrumb--toolNameText">Inicio</span>
+            </a>
+
+                                                                        </nav>
+
+        
+
+    
+
+ 
+            <!-- START VM includePageBody.vm -->
+
+<h2 class="skip" tabindex="-1" id="tocontent">Los contenidos empiezan aquí</h2>
+
+        
+    <main id="content" class="Mrphs-mainContent Mrphs-multipleTools " role="main">
+
+        <div id="col1" class="Mrphs-pageColumns Mrphs-pageColumns--single">
+
+            
+                
+                                    
+                    <!-- start Tool Container -->
+                    
+                    
+                    <div class="Mrphs-container Mrphs-sakai-lessonbuildertool">
+                    
+                    <!-- start Tool Header -->
+
+                    
+                        
+
+                            <nav class="Mrphs-toolTitleNav Mrphs-container--toolTitleNav">
+
+                                
+                                    
+                                        <h2 class="Mrphs-toolTitleNav__title">
+                                            <a href="https://poliformat.upv.es/portal/site/!gateway-es/tool-reset/4bd36fed-4d79-4d97-a044-f5c1b72f2339" title="Página de inicio de la herramienta: Lessons">
+                                                <span class="Mrphs-toolTitleNav__link Mrphs-toolTitleNav__link--reset"></span>
+                                                <span class="Mrphs-toolTitleNav__text">Lessons</span>
+                                            </a>
+					                        <span class="Mrphs-toolTitleNav__addLeft"></span>
+                                        </h2>
+
+                                     
+                                 
+                                <div class="Mrphs-toolTitleNav__button_container home">
+
+
+                                 
+				                    <span class="Mrphs-toolTitleNav__addRight"></span>
+                                
+                                    <button class="Mrphs-toolTitleNav__link Mrphs-toolTitleNav__link--directurl" rel="#Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_directurl" title="Enlace directo a esta herramienta" aria-haspopup="dialog">
+                                        <span class="Mrphs-itemTitle">Enlace</span>
+                                    </button>
+                                    <div id="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_directurl" role="dialog" aria-labelledby="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_directurl__title" class="Mrphs-directUrl Mrphs-directUrl__dropDown">
+                                        <i class="fa fa-times dropDown_close" aria-hidden="true" tabindex="0"></i>
+                                        <label for="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_urlholder" id="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_directurl__title" class="dropDown_title">Enlace directo a esta herramienta</label>
+                                        
+                                            <input tabindex="0" type="checkbox" id="directToolUrl-1" onclick="toggleShortUrlOutput('https://poliformat.upv.es/portal/directtool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/', this, 'Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_urlholder');" class="Mrphs-directUrl__checkbox"><label for="directToolUrl-1">Acortar URL</label>
+
+                                         
+                                        <textarea name="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_urlholder" id="Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_urlholder" tabindex="0" class="Mrphs-directUrl__textarea Main4bd36fedx4d79x4d97xa044xf5c1b72f2339_urlholder" >https://poliformat.upv.es/portal/directtool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/</textarea>
+                                    </div>
+
+                                 
+                                 
+                                    <sakai-maximise-button ></sakai-maximise-button>
+
+                                </div>
+
+                            </nav> 
+                         
+                     
+                    <!-- END Tool Header -->
+
+                    <!-- START Tool Body -->
+
+                    
+                        <!-- Buffered Body Tool Content -->
+                        
+ <input  id="lessonsSubnavToolId" type="hidden" value="4bd36fed-4d79-4d97-a044-f5c1b72f2339"/>
+ 
+ <input  id="lessonsSubnavPageId" type="hidden" value="1006988"/>
+ <input  id="lessonsSubnavItemId" type="hidden" value="1006989"/>
+ <input  id="lessonsCurrentPageId" type="hidden" value="1006988"/>
+ <script >
+     if (sakai) {
+         if (sakai.lessons_subnav) {
+             // Notify the lessons_subnav that we're on a lessons page
+             sakai.lessons_subnav.set_current_lessons_page();
+         }
+     }
+ </script>
+ <script >includeLatestJQuery('ShowPage.html');</script>
+ <script  type="text/javascript" src="/library/js/lang-datepicker/lang-datepicker.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/jqBarGraph.1.1.customized.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/jquery.oembed.js?version=20210916"></script>
+ <link  rel="stylesheet" href="https://poliformat.upv.es/lessonbuilder-tool/js/jquery.oembed.css?version=20210916" type="text/css"/>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/jquery.cluetip.min.js?version=20210916"></script>
+ <link  rel="stylesheet" href="https://poliformat.upv.es/lessonbuilder-tool/css/jquery.cluetip.css?version=20210916" type="text/css"/>
+ <link rel="stylesheet" href="/library/editor/ckextraplugins/folder-listing/css/file-tree.css?version=20210916" type="text/css"/>
+ <link rel="stylesheet" href="/library/webjars/fullcalendar/4.3.1/core/main.min.css?version=20210916"/>
+ <link rel="stylesheet" href="/library/webjars/fullcalendar/4.3.1/daygrid/main.min.css?version=20210916"/>
+ <link rel="stylesheet" href="/library/webjars/fullcalendar/4.3.1/timegrid/main.min.css?version=20210916"/>
+ <script src="/library/webjars/fullcalendar/4.3.1/core/main.min.js?version=20210916"></script>
+ <script src="/library/webjars/fullcalendar/4.3.1/daygrid/main.min.js?version=20210916"></script>
+ <script src="/library/webjars/fullcalendar/4.3.1/timegrid/main.min.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/peer-eval.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/hoverIntent.js?version=20210916"></script>
+ <script type="text/javascript" src="/library/editor/ckextraplugins/folder-listing/js/file-tree.js?version=20210916"></script>
+ <script type="text/javascript" src="/library/editor/ckextraplugins/folder-listing/js/folder-listing.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/show-page.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/twitter.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/announcements.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/commonGrading.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/gradingAjax.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/checklistDisplay.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/forum-summary.js?version=20210916"></script>
+ <script  type="text/javascript" src="https://poliformat.upv.es/lessonbuilder-tool/js/lessons-calendar.js?version=20210916"></script>
+ 
+
+ 
+ 
+ 
+ 
+
+	 <div  sakaimajor="20" class="portletBody" sakaiversion="20.3">
+
+		 
+
+		 
+
+		 
+
+		 
+
+		 <div  class="neoPortletTitleWrap" style="display:none">
+		     <div class="portletTitle title-tools Mrphs-toolTitleNav Mrphs-container--toolTitleNav">
+			 <div class="title">
+			     
+			     
+				   <h2 >
+				       <span >Inicio</span>
+			   </h2>
+		       </div>
+	     <div class="action topaction">
+                 <span style="display:none;" id="expandCollapseButtons">
+                   <a href="#" role="button" id="expandAllSections" class="button menuitem"><span aria-hidden="true" style="padding-right:5px;" class="fa fa-toggle-down"></span><span >Expandir todo</span></a>
+                   <a role="button" style="display:none;" href="#" id="collapseAllSections" class="button menuitem"><span aria-hidden="true" style="padding-right:5px;" class="fa fa-toggle-up"></span><span >Colapsar todo</span></a>
+		 </span>
+		 <span >
+		   
+		   
+		 </span>
+		 <a  role="button" onclick="window.open(printViewWithParameter(window.location.href,'printview'));return false" href="https://poliformat.upv.es/portal/site/!gateway-es/tool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/PagePicker?returnView=&amp;studentItemId=0&amp;backPath=&amp;bltiAppStores=false&amp;errorMessage=&amp;messageId=&amp;clearAttr=&amp;source=summary&amp;title=&amp;sendingPage=-1&amp;newTopLevel=false&amp;postedComment=false&amp;addBefore=&amp;path=&amp;itemId=-1&amp;topicId=&amp;addTool=-1&amp;recheck=&amp;id=&amp;forumId=" id="print-view" title="Vista de impresión" class="Mrphs-toolTitleNav__link top-icon fa fa-print"><span  class="Mrphs-itemTitle">Vista de impresión</span></a>
+		 <a  role="button" onclick="window.open(printViewWithParameter(window.location.href,'printall'));return false" href="https://poliformat.upv.es/portal/site/!gateway-es/tool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/PagePicker?returnView=&amp;studentItemId=0&amp;backPath=&amp;bltiAppStores=false&amp;errorMessage=&amp;messageId=&amp;clearAttr=&amp;source=summary&amp;title=&amp;sendingPage=-1&amp;newTopLevel=false&amp;postedComment=false&amp;addBefore=&amp;path=&amp;itemId=-1&amp;topicId=&amp;addTool=-1&amp;recheck=&amp;id=&amp;forumId=" id="print-all" title="Vista de impresión global" class="Mrphs-toolTitleNav__link top-icon fa fa-print"><span  class="Mrphs-itemTitle">Vista de impresión global</span></a>
+		 <a  role="button" href="https://poliformat.upv.es/portal/site/!gateway-es/tool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/PagePicker?returnView=&amp;studentItemId=0&amp;backPath=&amp;bltiAppStores=false&amp;errorMessage=&amp;messageId=&amp;clearAttr=&amp;source=summary&amp;title=&amp;sendingPage=-1&amp;newTopLevel=false&amp;postedComment=false&amp;addBefore=&amp;path=&amp;itemId=-1&amp;topicId=&amp;addTool=-1&amp;recheck=&amp;id=&amp;forumId=" id="show-pages" title="Índice de páginas" class="Mrphs-toolTitleNav__link top-icon fa fa-list-ul"><span  class="Mrphs-itemTitle">Índice de páginas</span></a>
+		 
+		 
+
+		   
+		   
+		   
+		     
+	       </div>
+	     <div style="clear:both"> </div>
+    		</div>
+        </div>
+		
+		 <div id="subpage-breadcrumb-div" class="subpage-breadcrumb-div"></div>
+	
+		
+		
+<script type="text/javascript">
+	var breadcrumbs = jQuery(".breadcrumbs span");
+	if (jQuery(".oldPortal").size() === 0) {
+	    var title = jQuery(".title span:last").text();
+	    var owner = jQuery("#owner").text();
+	    var title = title + owner;
+	    if (breadcrumbs.size() > 0) {
+		jQuery(".subpage-breadcrumb-div").append(jQuery(".breadcrumbs span").slice(1));
+		jQuery(".subpage-breadcrumb-div").prepend('<a id="lessonReset">' + jQuery(".Mrphs-hierarchy--toolName").text().trim() + '</a>');
+		jQuery("#lessonReset").attr("href", jQuery(".Mrphs-hierarchy--toolName")[0].href);
+	    } else {
+		jQuery(".subpage-breadcrumb-div").css({"display": "none"});
+	    }
+	    jQuery(".Mrphs-siteHierarchy").children().wrapAll('<div class="hierarchyWrap"/>');
+
+	    jQuery(".Mrphs-toolTitleNav__addRight").before(jQuery(".topaction > a"));
+	    jQuery(".Mrphs-toolTitleNav__button_container > a").addClass("Mrphs-toolTitleNav__link");
+
+         } else {
+	     jQuery(".topaction > a").addClass("button");
+         }
+
+	jQuery(".Mrphs-toolTitleNav__button_container").after(jQuery(".action"));
+
+	jQuery(".portletBody").prepend(jQuery(".navIntraTool"));
+
+	function confir() {
+		var confirmMsg = document.getElementById('deleteButtonLangSupp').innerHTML;
+		return confirm(confirmMsg);
+	}
+</script>
+
+		<div role="menu" style="display:none" id="addContentDiv" class="dropDownDiv specialLink lessonsDialog" aria-label="Add content menu">
+		<div  class="addContentMessage instruction">Use esto para añadir un nuevo elemento de contenido al final de la página. Use el icono + para añadir contenido en otros puntos de la página.</div>
+		<ul >
+		  <li >
+		    
+		  </li>
+		  <li >
+		    
+		  </li>
+		  <li >
+		    
+		  </li>
+		  <li >
+		    
+		  </li>
+		  <li >
+		    
+		  </li>
+		  <!--li rsf:id="blti-app-li">
+		    <a href="#" role="button" rsf:id="add-blti-app" class="add-before-param"><span rsf:id="msg.simplepage.blti.app"></span></a>
+		  </li-->
+		  
+		  
+		  
+		  <hr style="border:none"/>
+		  
+		  
+		  
+                  
+                  
+		  
+		  
+		  <hr style="border:none"/>
+            
+		  
+                  
+                  
+                  
+                  
+                  
+		</ul>
+		</div>
+
+		
+
+		
+
+		
+		<div style="z-index: 1;" role="main" class="itemclass">
+			<input id="activeQuestion" type="hidden"/>
+            
+
+			<h2  id="itemContainer::maintablelabel" class="offscreen">Contenido de la página principal</h2>
+<!-- WARNING: javascript for add-break-section adds section, ul, li, and sectionedit markup, so if you change here, keep it in sync -->
+			<div><!-- start section wrapper -->
+			<h3  id="itemContainer::sectionWrapper::sectionHeader" class="sectionHeader skip"><span  class="sectionHeaderText"></span><span  aria-hidden="true" style="display:none" class="sectionCollapsedIcon fa-bars"></span><span  class="toggleCollapse">Pulsa para colapsar</span><span aria-hidden="true" class="collapseIcon fa-toggle-up"></span></h3>
+			<div id="itemContainer::sectionWrapper::section::" class="section">
+			<div class="column cols1 lastcol">
+			  <div class="editsection">
+			  
+			  
+			  </div>
+			
+
+                        <div border="0" role="list" aria-labelledby="itemContainer::maintablelabel" style="z-index: 1;" class="indent mainList">
+                <div id="itemContainer::sectionWrapper::section::column::itemTable::item::" role="listitem" class="breaksection">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div><div id="itemContainer::sectionWrapper::section::column::itemTable::item:1:" role="listitem" class="item textType">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div  class="right-col">
+                      
+                      <div  class="textbox"><p><img alt="" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/ICEDESPERSONAL.png" style="float: left;height: 150.0px;margin-right: 10.0px;width: 300.0px;" /><span style="font-size: 26.0px;"><strong><big><span style="color: rgb(255,0,0);"> Talleres para el alumnado de la UPV organizados por el ICE</span></big></strong></span></p>
+
+<p><strong>¿Te gustaría desarrollar habilidades para gestionar tu tiempo, mejorar tus relaciones personales, preparar tu TFG/TFM ...? ¿Quieres aprender estrategias para optimizar tus estudios? </strong></p>
+
+<p><strong>Si es así, apúntate a los talleres online gratuitos, organizados desde el ICE para ti, que estudias en la UPV: <a href="https://iceupv.blogs.upv.es/tercera_convocatoria_alumnado/" target="_blank">https://iceupv.blogs.upv.es/tercera_convocatoria_alumnado/</a></strong><a href="https://iceupv.blogs.upv.es/tercera_convocatoria_alumnado/" target="_blank"><strong>.</strong></a></p>
+</div>
+                      
+                    </div>
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div>
+            </div>
+		    <script type="text/javascript">
+		    // to avoid flickering, process buttons in this item now
+		    $('.usebutton').button({text:true});
+		    </script>
+	    </div>	
+	    </div>
+                <!-- end section wrapper --></div><div><!-- start section wrapper -->
+			<h3  id="itemContainer::sectionWrapper:1:sectionHeader" class="sectionHeader skip"><span  class="sectionHeaderText"></span><span  aria-hidden="true" style="display:none" class="sectionCollapsedIcon fa-bars"></span><span  class="toggleCollapse">Pulsa para colapsar</span><span aria-hidden="true" class="collapseIcon fa-toggle-up"></span></h3>
+			<div id="itemContainer::sectionWrapper:1:section::" class="section">
+			<div class="column cols2 split">
+			  <div class="editsection">
+			  
+			  
+			  </div>
+			
+
+                        <div border="0" role="list" aria-labelledby="itemContainer::maintablelabel" style="z-index: 1;" class="indent mainList">
+                <div id="itemContainer::sectionWrapper:1:section::column::itemTable::item::" role="listitem" class="breaksection">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div><div id="itemContainer::sectionWrapper:1:section::column::itemTable::item:1:" role="listitem" class="item textType">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div  class="right-col">
+                      
+                      <div  class="textbox"><div class="lessons--item-img"><img alt="" src="https://www.upv.es/poliformat/img/idea-genial.png" /><a href="https://wiki.upv.es/confluence/display/PFTHELP" target="_blank">Consulta la Ayuda de</a><a href="https://wiki.upv.es/confluence/display/PFTHELP" target="_blank"> PoliformaT</a>
+
+<p><strong>CONSULTA LA AYUDA DE POLIFORMAT</strong></p>
+</div>
+
+<div class="lessons--item-img"><img alt="" src="https://www.upv.es/poliformat/img/help.png" /> <a href="https://poliformat.upv.es/portal/site/!gateway-es/page/d943470d-f2a9-4d14-a20f-08ef1d42a900" target="_top">Servicio de atención al usuario</a>
+
+<p>Servicio de atención al usuario</p>
+</div>
+</div>
+                      
+                    </div>
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div>
+            </div>
+		    <script type="text/javascript">
+		    // to avoid flickering, process buttons in this item now
+		    $('.usebutton').button({text:true});
+		    </script>
+	    </div><div class="column cols2">
+			  <div class="editsection">
+			  
+			  
+			  </div>
+			
+
+                        <div border="0" role="list" aria-labelledby="itemContainer::maintablelabel" style="z-index: 1;" class="indent mainList">
+                <div id="itemContainer::sectionWrapper:1:section::column:1:itemTable::item::" role="listitem" class="breakcolumn">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div><div id="itemContainer::sectionWrapper:1:section::column:1:itemTable::item:1:" role="listitem" class="item textType">
+                    
+                    
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div  class="right-col">
+                      
+                      <div  class="textbox"><div class="lessons--tools"> <h3><span style="color: rgb(128,0,0);">Accede a nuestras herramientas:</span></h3>  <div class="row"> <div class="col-md-6"><a href="https://media.upv.es" target="_blank" rel="noopener"><img alt="" height="41" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/UPVmedia.png" width="150" /></a></div>  <div class="col-md-6"><a href="http://www.upv.es/contenidos/DOCENRED/indexc.html" target="_blank" rel="noopener"><img alt="" height="51" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/docenred.jpg" width="150" /></a></div> </div>  <div class="row"> <div class="col-md-6"><a href="https://videoapuntes.upv.es/" target="_blank" rel="noopener"><img alt="" height="35" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/VideoApuntes.png" width="150" /></a></div>  <div class="col-md-6"><a href="https://polibuscador.upv.es/primo-explore/search?vid=bibupv&amp;sortby=rank&amp;lang=es_ES" target="_blank" rel="noopener"><img alt="" height="36" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/polibuscador.png" width="150" /></a></div> </div>  <div class="row"> <div class="col-md-6"><a href="https://www.upvx.es/" target="_blank" rel="noopener"><img alt="" height="51" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/upvx.png" width="145" /></a></div>  <div class="col-md-6"><a href="https://riunet.upv.es" target="_blank" rel="noopener"><img alt="" height="57" src="https://poliformat.upv.es/access/content/group/ESP_0_2534/IMAGENES/riunet_sin.png" width="130" /></a></div> </div> </div> </div>
+                      
+                    </div>
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div><div id="itemContainer::sectionWrapper:1:section::column:1:itemTable::item:2:" role="listitem" class="item pageType listType">
+                    
+                    <div  class="right-col">
+                        <div class="statusCol">
+                            <img  alt="" title="" class="status-image icon-image" src="/lessonbuilder-tool/images/not-required.png"/>
+                        </div>
+                      <div  class="contentCol hidden">
+                        <div class="link-div">
+                          <span  aria-hidden="true" class="fa-item-text fa-folder-open-o"></span>
+                          <span aria-level="3" role="heading" class="link-div-head"><a  href="https://poliformat.upv.es/portal/site/!gateway-es/tool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/ShowPage?returnView=&amp;studentItemId=0&amp;backPath=&amp;bltiAppStores=false&amp;errorMessage=&amp;messageId=&amp;clearAttr=&amp;source=&amp;title=&amp;sendingPage=1012037&amp;newTopLevel=false&amp;postedComment=false&amp;addBefore=&amp;path=push&amp;itemId=1012038&amp;topicId=&amp;addTool=-1&amp;recheck=&amp;id=&amp;forumId=" class="itemlink" lessonbuilderitem="1012038"><span  class="link-text itemtext">CASTELLANO</span></a></span>
+                          
+                          <span ></span>
+                          
+                          <a  href="http://lessonbuilder.sakaiproject.org/1012038/" title="Copiar: CASTELLANO" class="itemcopylink">CASTELLANO</a>
+                          
+                        </div>
+                        
+                        
+
+                        <div  class="rowdescription itemdescription"></div>
+                      </div>
+                      
+                      <div style="display:none">
+                        <span  class="indentLevel">0</span>
+                        <span  class="custom-css-class">hidden</span>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    
+		    <div class="right-col">
+		      
+		    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+
+                    
+                    
+
+                    
+                    
+
+
+                    
+                    
+
+
+                    
+                    
+                    
+                    
+                    
+		    
+
+                    
+                    
+                </div>
+            </div>
+		    <script type="text/javascript">
+		    // to avoid flickering, process buttons in this item now
+		    $('.usebutton').button({text:true});
+		    </script>
+	    </div>	
+	    </div>
+                <!-- end section wrapper --></div>
+	    <script type="text/javascript">
+	      // to avoid flickering, process indent here
+	      doIndents();
+	    </script>
+
+		</div>
+		
+	
+		
+		   <ul class="navIntraTool">
+		   <li class="bottomButtons contentButton">
+		    
+		   
+		   </li>
+		   </ul>
+
+		<div style="display:none;">
+			<p  id="simplepage.announcements-no-message">Actualmente no existen anuncios</p>
+			<p  id="simplepage.calendar-more-info">Detalles</p>
+            <p  id="simplepage.announcements-header-title">Anuncios</p>
+            <p  id="simplepage.eventAttachments">Adjuntos:</p>
+			<p  id="simplepage.add-comment">Añadir comentario</p>
+			<p  id="simplepage.edit-comment">Editar comentario</p>
+			<p  id="simplepage.cancel_message">Cancelar</p>
+			<p  id="simplepage.delete_comment">Borrar comentario</p>
+			<p  id="simplepage.save_message">Guardar</p>
+			<p  id="simplepage.ckeditor">Editor, pulse ALT-0 para la ayuda</p>
+			<p  id="simplepage.forum-summary-no-message">Actualmente no existen conversaciones que mostrar.</p>
+			<p  id="simplepage.forum-summary-error-message">Error al añadir el resumen del foro:</p>
+			<p  id="simplepage.forum-header-title">Últimas conversaciones de foros</p>
+			<p  id="simplepage.clickToExpand">Pulsa para expandir</p>
+			<p  id="simplepage.clickToCollapse">Pulsa para colapsar</p>
+			<p  id="simplepage.twitter-name-notblank">Por favor, introduzca un nombre de usuario.</p>
+			<p  id="simplepage.height-error-message">Solamente números</p>
+			<p  id="simplepage.status.completed">Finalizada</p>
+			<p  id="simplepage.announcements-error-message">Error al añadir anuncios</p>
+			<p  id="simplepage.announcements-header-title!1">Anuncios</p>
+		</div>
+
+		
+		
+		
+
+         
+
+         
+
+		
+
+
+
+	</div>
+	
+
+	
+
+	<div style="display:none;" id="calendarEventDialog">
+		<div id="eventInfo">
+			<label  for="startTime">Hora de inicio:</label>
+			<span id="startTime"></span><br /><br />
+			<label  for="endTime">Hora de fin:</label>
+			<span id="endTime"></span><br /><br />
+			<label  for="event-type">Tipo de evento:</label>
+			<span id="event-type-icon"></span><span id="event-type"></span><br /><br />
+			<label  for="event-description">Descripción:</label>
+			<span id="event-description"></span><br /><br />
+			<label  for="site-name">Sitio:</label>
+			<span id="site-name"></span><br />
+			<span id="eventAttachmentsDiv">
+			<label  for="event-attachments">Adjuntos:</label>
+			<span id="event-attachments"></span><br />
+			</span>
+			<br />
+		</div>
+	</div>
+	
+
+       <form  action="https://poliformat.upv.es/portal/site/!gateway-es/tool/4bd36fed-4d79-4d97-a044-f5c1b72f2339/ShowPage" style="display:none" method="post"><input type="hidden"  name="returnView" value="" />
+<input type="hidden"  name="studentItemId" value="0" />
+<input type="hidden"  name="backPath" value="" />
+<input type="hidden"  name="bltiAppStores" value="false" />
+<input type="hidden"  name="errorMessage" value="" />
+<input type="hidden"  name="messageId" value="" />
+<input type="hidden"  name="clearAttr" value="" />
+<input type="hidden"  name="source" value="" />
+<input type="hidden"  name="title" value="" />
+<input type="hidden"  name="sendingPage" value="-1" />
+<input type="hidden"  name="newTopLevel" value="false" />
+<input type="hidden"  name="postedComment" value="false" />
+<input type="hidden"  name="addBefore" value="" />
+<input type="hidden"  name="path" value="" />
+<input type="hidden"  name="itemId" value="-1" />
+<input type="hidden"  name="topicId" value="" />
+<input type="hidden"  name="addTool" value="-1" />
+<input type="hidden"  name="recheck" value="" />
+<input type="hidden"  name="id" value="" />
+<input type="hidden"  name="forumId" value="" />
+
+         
+	 <input  name="delete-item-itemid" id="delete-item-itemid" type="hidden" value=""/><input type="hidden"  name="delete-item-itemid-fossil" value="istring#{simplePageBean.itemId}" />
+
+         <input  name="command link parameters&amp;Submitting%20control=delete-item-button&amp;Fast%20track%20action=simplePageBean.deleteItem" id="delete-item-button" type="submit"/>
+       </form>
+
+
+                        <!-- End Buffered Body Tool Content -->
+
+                     
+                    <!-- end Tool Body -->
+                    
+                    </div>
+
+                    <!-- end Tool Container -->
+
+                 
+             
+        </div>
+
+         
+    </main> <!-- END of main.Mrphs-mainContent -->
+
+<!-- END VM includePageBody.vm -->
+        
+        <div class="Mrphs-container Mrphs-container--footer">
+
+    
+        <footer id="footer" role="contentinfo" class="Mrphs-footer">
+
+            <ul id="footer-links" class="Mrphs-footer--nav">
+
+            
+                <li><span><a href="https://poliformat.upv.es/portal/site/!gateway-es">PoliformaT</a></span></li>
+
+            
+                <li><span><a href="https://www.upv.es/" target="_blank">UPV</a></span></li>
+
+             
+                <li class="Mrphs-footer--details">
+                    <a id="Mrphs-footer--details__info" class="fa fa-info-circle" href="#" aria-label="Detalles del servidor" aria-describedby="Mrphs-footer--details__panel-description" data-toggle="popover" title="PoliformaT 20.3" data-placement="top"><span class="sr-only">Detalles del servidor</span></a>
+                    <div id="Mrphs-footer--details__panelTemplate" class="is-hidden">                            <div class="Mrphs-footer--details__panel">
+                            <div id="Mrphs-footer--details__panel-description" class="sr-only">Este panel contiene información sobre el servidor que se puede usar para solucionar problemas. El panel puede incluir la hora del servidor, su hora local, el nombre del servidor y la información de compilación.</div>
+                            <dl>
+                                                                    <dt class="Mrphs-footer--details__server-time">Hora del servidor:</dt>
+                                    <dd id="serverTime" class="Mrphs-footer--server-time" data-servertzdisplay="CEST" data-serverdateandgmtoffset="1633700739221"></dd>
+
+                                     
+                                 
+                                <dt>Servidor:</dt>
+                                <dd>sakv4.upv.es</dd>
+
+                                <dt>Información de SW:</dt>
+                                <dd>poliformaT</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="Mrphs-footer--project">
+                <p class="Mrphs-footer--copyright">Copyright 2003-2021 The Sakai Foundation. All rights reserved.</p>
+                <ul id="Mrphs-footer--poweredBy">
+
+                                        <li>
+                        <a href="https://www.sakailms.org/" target="_blank" class="external__link">
+                            <img class="Mrphs-footer--poweredby__image" src="/library/image/poweredBySakai.png" alt="Powered by Sakai" /><span class="skip external">(Abrir en una nueva ventana)</span>
+                        </a>
+                    </li>
+                     
+                </ul>
+            </div>
+        </footer>
+        
+        <div class="Mrphs-container Mrphs-container--extras">
+
+         
+ 
+ 
+        </div>         <div id="tutorial" class="Mrphs-tutorial Mrphs-modal"></div>
+        <div id="social-alerts" class="Mrphs-tutorial Mrphs-modal"></div>
+
+     
+</div>
+
+    </div>
+    
+    </div>
+    
+
+</div>
+
+    
+<!-- END VM includePageWithNav.vm -->
+
+        </div> <!-- end Mrphs-portalWrapper -->
+        <!-- END VM site.vm -->
+
+        <!-- Viewport helpers -->
+        <div id='Mrphs-viewport-helpers' aria-hidden='true'>
+          <div class='phone'></div>
+          <div class='tablet'></div>
+          <div class='desktop'></div>
+        </div>
+
+            <script>
+        var needJQuery = true;
+        var secondJQuery = false;
+        var notJQuery = false;
+        var dollarEmpty = false;
+        var dollarVersion = false;
+        if ( window.$ ) {
+              if ( window.$.fn && window.$.fn ) {
+                 dollarVersion = window.$.fn.jquery;
+              } else {
+                 dollarVersion = 'not jQuery';
+                 window.console && console.log('Dollar is defined but is not jQuery');
+                 window.console && console.log($);
+                 //Just have it reload this other $ afterward
+                 notJQuery = true;
+              }
+         } else {
+              dollarEmpty = true;
+              dollarVersion = 'not present';
+              if ( window.jQuery ) {
+                  window.console && console.log('tool called jQuery.noConflict()');
+              }
+        }
+        if ( window.jQuery ) {
+            tver = jQuery.fn.jquery;
+            if ( tver.indexOf('1.12.') == 0 ) {
+                window.console && console.log('Using tool jQuery '+tver);
+                needJQuery = false;
+            } else {
+                secondJQuery = true;
+            }
+        }
+        if ( needJQuery ) {
+            document.write('\x3Cscript src="/library/webjars//jquery/1.12.4/jquery.min.js?version=20210916">'+'\x3C/script>')
+            document.write('\x3Cscript src="/library/webjars/jquery-migrate/1.4.1/jquery-migrate.min.js?version=20210916">'+'\x3C/script>')
+            document.write('\x3Cscript src="/library/webjars/bootstrap/3.3.7/js/bootstrap.min.js?version=20210916">'+'\x3C/script>')
+            document.write('\x3Cscript src="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.js?version=20210916">'+'\x3C/script>')
+            document.write('\x3Clink rel="stylesheet" href="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.css?version=20210916"/>')
+            if (Modernizr.touch) {
+              document.write('\x3Cscript type="text/javascript" src="/library/webjars/jquery-ui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js?version=20210916">'+'\x3C/script>')
+            }
+            window.console && console.log('Portal scripts loaded JQ+MI+BS+UI');
+        } else {
+            if (typeof jQuery.migrateWarnings == 'undefined') {
+                document.write('\x3Cscript type="text/javascript" src="/library/webjars/jquery-migrate/1.4.1/jquery-migrate.min.js?version=20210916">'+'\x3C/script>')
+                window.console && console.log('Portal adding jQuery migrate');
+            }
+            if ( typeof jQuery.fn.popover == 'undefined') {
+                document.write('\x3Cscript type="text/javascript" src="/library/webjars/bootstrap/3.3.7/js/bootstrap.min.js?version=20210916">'+'\x3C/script>')
+                window.console && console.log('Portal adding Bootstrap');
+            }
+            if (typeof jQuery.ui == 'undefined') {
+                document.write('\x3Cscript type="text/javascript" src="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.js?version=20210916">'+'\x3C/script>')
+		document.write('\x3Clink rel="stylesheet" href="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.css?version=20210916"/>')
+                window.console && console.log('Portal adding jQuery UI');
+            }
+            if (typeof jQuery.ui == 'undefined' || (typeof jQuery.ui.mouse != 'undefined' && typeof jQuery.ui.mouse.prototype._touchStart == 'undefined')) {
+                document.write('\x3Cscript type="text/javascript" src="/library/webjars/jquery-ui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js?version=20210916">'+'\x3C/script>')
+                window.console && console.log('Portal adding jQuery UI Touch Punch for touch device support');
+            }
+        }
+    </script>
+    <script>
+        $PBJQ = jQuery; // The Portal's jQuery (also in $ for now)
+    </script>
+
+                 
+        <!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+<![endif]-->
+
+        <script>
+            if (typeof Handlebars == 'undefined') {
+                document.write('\x3Cscript src="/library/webjars/handlebars/4.0.6/handlebars.runtime.min.js?version=20210916">\x3C/script>');
+            }
+        </script>
+        <script src="/library/templates.js?version=20210916"></script>
+        <script src="/library/js/trimpath-template-latest.js?version=20210916"></script>
+        <script src="/library/js/jquery/bgiframe/jquery.bgiframe.min.js?version=20210916"></script>
+        <script src="/library/js/jquery/cluetip/1.2.10/jquery.cluetip.min.js?version=20210916"></script>
+        <script>
+            if (typeof jQuery.i18n == 'undefined') {
+                document.write('\x3Cscript src="/library/webjars/jquery-i18n-properties/1.2.2/jquery.i18n.properties.min.js?version=20210916">\x3C/script>');
+            }
+        </script>
+        <script src="/library/js/jquery/jquery.clearsearch.js?version=20210916"></script>
+        <script src="/library/skin/morpheus-gateway/js/morpheus.scripts.min.js?version=20210916"></script>
+        <script src="/library/webjars//pnotify/4.0.0/dist/iife/PNotify.js?version=20210916"></script>
+        <script src="/library/webjars//pnotify/4.0.0/dist/iife/PNotifyButtons.js?version=20210916"></script>
+        <script>includeWebjarLibrary("qtip2");</script>
+        <script src="/library/js/jquery/qtip/tutorial.js?version=20210916"></script>
+        <script src="/library/webjars/cropper/4.0.0/dist/cropper.min.js?version=20210916"></script>
+
+        <script type="module" src="/webcomponents/sakai-permissions.js?version=20210916"></script>
+        <script type="module" src="/webcomponents/sakai-search.js?version=20210916"></script>
+        <script type="module" src="/webcomponents/sakai-maximise-button.js?version=20210916"></script>
+
+         
+        
+ 
+         
+                    <script>
+                var sakaiPortalWindow = "";
+                $PBJQ(document).ready(function() {
+                    setupSkipNav();
+                });
+            </script>
+         
+        <script>
+            // If we loaded a second jQuery, revert $ and jQuery to the first jQuery
+            if ( secondJQuery ) {
+                $PBJQ = jQuery.noConflict(true); // Safely return $ to the tool jQuery
+                if ( ! dollarEmpty && !notJQuery ) jQuery = $;  // Return jQuery to point at the tool jQuery
+            }
+            if (notJQuery && !secondJQuery) {
+                $PBJQ = jQuery.noConflict(true); // Safely return $ to the tool jQuery
+                //Just set jQuery to be the same thing since it didn't exist before
+                jQuery = $PBJQ;
+
+            }
+            window.console && console.log('Portal script load complete PBJQ='+$PBJQ.fn.jquery+' jQuery='+jQuery.fn.jquery+' $='+dollarVersion);
+
+            $PBJQ(document).ready(function() {
+                setupSiteNav();
+                            });
+        </script>
+
+        <script>
+        function portal_check_pnotify() {
+            $PBJQ.getJSON( "/direct/portal/notify.json", function( data ) {
+                for(i=0; i<data.error.length; i++ ) {
+                     $PBJQ(function(){
+                        PNotify.defaults.styling = 'bootstrap3';
+                        PNotify.defaults.icons = 'fontawesome4';
+                        PNotify.alert({
+                            title: 'Aviso',
+                            text: data.error[i],
+                            type: 'notice'
+                        });
+                    });
+                }
+            });
+        }
+            </script>
+
+        <!--[if lt IE 9]>
+        <script src="/library/skin/morpheus-gateway/js/ie/sakai.portal.ie.js?version=20210916"></script>
+<![endif]-->
+
+        <script src="/library/js/caps-lock-checker.js?version=20210916"></script>
+
+        <script src="/portal/scripts/jumptotop.js?version=20210916"></script>
+
+         
+         <link href="/pasystem-tool/stylesheets/pasystem.css?version&#x3D;20210916" rel="stylesheet" property="stylesheet" type="text/css" />
+
+<script>
+// Work around the fact that several pages pull in very old versions
+// of JQuery.
+function paSystemJQueryOK() {
+    if (!window.jQuery) {
+        /* no jQuery at all */
+        return false;
+    }
+
+    var version_numbers = jQuery.fn.jquery.split('.');
+
+    /* >= 1.9+ */
+    return (parseInt(version_numbers[0]) > 1) || (parseInt(version_numbers[0]) == 1 && parseInt(version_numbers[1]) >= 9);
+}
+
+if (paSystemJQueryOK()) {
+  document.write('\x3Cscript src="/pasystem-tool/scripts/pasystem.js?version&#x3D;20210916">\x3C/script>');
+  document.write('\x3Cscript>includeWebjarLibrary(\'featherlight\')\x3C/script>');
+
+  var pasystem = pasystem || {'loaded': true};
+} else {
+  console.log("PASystem not loaded for this page because jQuery is missing or unsupported.");
+}
+</script>
+<script id="pasystemBannerAlertsTemplate" type="text/template">
+  <div class="pasystem-banner-alert pasystem-banner-${type}" id="${id}">
+    <span class="pasystem-banner-alert-message">${message}</span>
+    {if dismissible}<a class="pasystem-banner-alert-close" href="javascript:void(0)"></a>{/if}
+  </div>
+</script>
+<script id="pasystemBannerAlertsToggleTemplate" type="text/template">
+  <li class="pasystem-banner-alert-toggle-list-item">
+    <a href="javscript:void(0)" class="pasystem-banner-alert-toggle">
+      Mostrar alertas del sistema
+    </a>
+  </li>
+</script>
+<script>
+  if (pasystem) {
+    pasystem['banners'] = new PASystemBannerAlerts([], "");
+  }
+</script>
+<script id="timezoneBannerTemplate" type="text/template">
+  <span>
+    La zona horaria de su ordenador <span class="computerTimezone">${reportedTimezone}</span> no coincide con la zona horaria de su cuenta <span class="prefsTimezone">${prefsTimezone}</span>. <span class="pasystem-tz-click-here"><a href="${setTimezoneUrl}" id="setTimezoneMsg">Pinche aquí para actualizar su zona horaria</a></span>.
+  </span>
+</script>
+
+<script>
+  if (pasystem) {
+    new PASystemTimezoneChecker().checkTimezone();
+  }
+</script>
+
+
+        <!-- START VM includeCookieNotice.vm -->
+<!-- END VM includeCookieNotice.vm -->
+
+         
+        
+
+        
+    </body>
+</html>
