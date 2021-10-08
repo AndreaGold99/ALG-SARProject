@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-
+from test_tarea2_plantilla import dp_intermediate_damerau_threshold, dp_levenshtein_threshold, dp_restricted_damerau_threshold
 from trie import Trie
 
 class SpellSuggester:
@@ -55,7 +55,12 @@ class SpellSuggester:
         assert distance in ["levenshtein", "restricted", "intermediate"]
 
         results = {} # diccionario termino:distancia
-        # TODO
+        dist_algo = pick_distance(distance)
+
+        for element in self.vocabulary:
+            dist = dist_algo(element, term, threshold)
+            if dist <= threshold:
+                results[element] = dist
         return results
 
 class TrieSpellSuggester(SpellSuggester):
@@ -68,7 +73,13 @@ class TrieSpellSuggester(SpellSuggester):
     
 if __name__ == "__main__":
     spellsuggester = TrieSpellSuggester("./corpora/quijote.txt")
-    print(spellsuggester.suggest("alábese"))
+    print(spellsuggester.suggest("casa"))
     # cuidado, la salida es enorme print(suggester.trie)
 
-    
+def pick_distance(distance):
+    if distance == "levenshtein":
+        return dp_levenshtein_threshold
+    elif distance == "restricted":
+        return dp_restricted_damerau_threshold
+    else:
+        return dp_intermediate_damerau_threshold
