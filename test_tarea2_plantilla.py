@@ -1,4 +1,14 @@
+#!/usr/bin/env python3
+# Elias Urios Alacreu
+# Andrea Cerverón Carot
+# Jose María Valverde García 
+
+
+""" ALL FUNCTIONS ARE A SMALL VARIATON FROM PART1, JUST CHECK IF STATEMENTS"""
+
+
 def dp_levenshtein_threshold(x, y, th):
+    """Same as the function on test_1, but checks min value with threshold"""
     currentrow = [0]*(1+len(x))
     previousrow = [0]*(1+len(x))
     currentrow[0] = 0
@@ -12,8 +22,10 @@ def dp_levenshtein_threshold(x, y, th):
             currentrow[i] = min(currentrow[i-1] + 1,
                 previousrow[i] + 1,
                 previousrow[i-1] + (x[i-1] != y[j-1]))
+        #Threshold of currentrow
         if min(currentrow) > th:
             return th + 1
+    #Return min between current and th + 1
     return min(currentrow[len(x)], th + 1)
 
 def dp_restricted_damerau_threshold(x, y, th):
