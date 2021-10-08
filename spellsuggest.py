@@ -2,6 +2,7 @@
 import re
 from test_tarea2_plantilla import dp_intermediate_damerau_threshold, dp_levenshtein_threshold, dp_restricted_damerau_threshold
 from trie import Trie
+import pdb
 
 class SpellSuggester:
 
@@ -22,6 +23,14 @@ class SpellSuggester:
 
         self.vocabulary  = self.build_vocab(vocab_file_path, tokenizer=re.compile("\W+"))
 
+    def pick_distance(self, distance):
+        if distance == "levenshtein":
+            return dp_levenshtein_threshold
+        elif distance == "restricted":
+            return dp_restricted_damerau_threshold
+        else:
+            return dp_intermediate_damerau_threshold
+
     def build_vocab(self, vocab_file_path, tokenizer):
         """Método para crear el vocabulario.
 
@@ -38,7 +47,7 @@ class SpellSuggester:
             vocab.discard('') # por si acaso
             return sorted(vocab)
 
-    def suggest(self, term, distance="levenshtein", threshold=None):
+    def suggest(self, term, distance="levenshtein", threshold=0):
 
         """Método para sugerir palabras similares siguiendo la tarea 3.
 
@@ -55,12 +64,11 @@ class SpellSuggester:
         assert distance in ["levenshtein", "restricted", "intermediate"]
 
         results = {} # diccionario termino:distancia
-        dist_algo = pick_distance(distance)
-
-        for element in self.vocabulary:
-            dist = dist_algo(element, term, threshold)
+        dist_algo = self.pick_distance(distance)
+        for voc in self.vocabulary:
+            dist = dist_algo(term, voc, threshold)
             if dist <= threshold:
-                results[element] = dist
+                results[voc] = dist
         return results
 
 class TrieSpellSuggester(SpellSuggester):
@@ -72,14 +80,8 @@ class TrieSpellSuggester(SpellSuggester):
         self.trie = Trie(self.vocabulary)
     
 if __name__ == "__main__":
-    spellsuggester = TrieSpellSuggester("./corpora/quijote.txt")
-    print(spellsuggester.suggest("casa"))
+    spellsuggester = SpellSuggester("./corpora/quijote.txt")
+    print(len(spellsuggester.suggest("casa", threshold=1)))
     # cuidado, la salida es enorme print(suggester.trie)
 
-def pick_distance(distance):
-    if distance == "levenshtein":
-        return dp_levenshtein_threshold
-    elif distance == "restricted":
-        return dp_restricted_damerau_threshold
-    else:
-        return dp_intermediate_damerau_threshold
+
