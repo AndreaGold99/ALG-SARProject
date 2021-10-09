@@ -18,7 +18,7 @@ if __name__ == "__main__":
                     for g in entry.finditer(matchline.group('dict')) }
                 assert(numresul == len(resul))
                 res = spellsuggester.suggest(term, threshold=threshold)
-                print(term)
-                print(numresul)
-                print(len(res))
+                #print(term)
+                #print(numresul)
+                #print(len(res))
                 assert(numresul == len(res))
