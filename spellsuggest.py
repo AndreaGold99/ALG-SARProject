@@ -66,9 +66,10 @@ class SpellSuggester:
         results = {} # diccionario termino:distancia
         dist_algo = self.pick_distance(distance)
         for voc in self.vocabulary:
-            dist = dist_algo(term, voc, threshold)
-            if dist <= threshold:
-                results[voc] = dist
+            if abs(len(term) - len(voc)) <= threshold:
+                dist = dist_algo(term, voc, threshold)
+                if dist <= threshold:
+                    results[voc] = dist
         return results
 
 class TrieSpellSuggester(SpellSuggester):
@@ -81,7 +82,7 @@ class TrieSpellSuggester(SpellSuggester):
     
 if __name__ == "__main__":
     spellsuggester = SpellSuggester("./corpora/quijote.txt")
-    print(len(spellsuggester.suggest("casa", threshold=1)))
+
     # cuidado, la salida es enorme print(suggester.trie)
 
 
