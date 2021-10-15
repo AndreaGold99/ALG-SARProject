@@ -5,7 +5,7 @@
 
 
 """ ALL FUNCTIONS ARE A SMALL VARIATON FROM PART1, JUST CHECK IF STATEMENTS"""
-
+import pdb
 
 def dp_levenshtein_threshold(x, y, th):
     """Same as the function on test_1, but checks min value with threshold"""
@@ -92,16 +92,17 @@ test = [
 
 thrs = range(1,4)
 
-for threshold in thrs:
-    print(f"thresholds: {threshold:3}")
-    for x,y in test:
-        print(f"{x:12} {y:12} \t",end="")
-        for dist,name in ((dp_levenshtein_threshold,"levenshtein"),
-                          (dp_restricted_damerau_threshold,"restricted"),
-                          (dp_intermediate_damerau_threshold,"intermediate")):
-        
-            print(f" {name} {dist(x,y,threshold):2}",end="")
-        print()
+if __name__=="__main__":
+    for threshold in thrs:
+        print(f"thresholds: {threshold:3}")
+        for x,y in test:
+            print(f"{x:12} {y:12} \t",end="")
+            for dist,name in ((dp_levenshtein_threshold,"levenshtein"),
+                            (dp_restricted_damerau_threshold,"restricted"),
+                            (dp_intermediate_damerau_threshold,"intermediate")):
+
+                print(f" {name} {dist(x,y,threshold):2}",end="")
+            print()
                  
 """
 Salida del programa:
