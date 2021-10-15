@@ -37,6 +37,15 @@ class SpellSuggester:
             vocab = set(tokenizer.split(fr.read().lower()))
             vocab.discard('') # por si acaso
             return sorted(vocab)
+    
+
+    def pick_distance(self, distance):
+        if distance == "levenshtein":
+            return dp_levenshtein_threshold
+        elif distance == "restricted":
+            return dp_restricted_damerau_threshold
+        else:
+            return dp_intermediate_damerau_threshold
 
     def suggest(self, term, distance="levenshtein", threshold=None):
 
@@ -55,12 +64,12 @@ class SpellSuggester:
         assert distance in ["levenshtein", "restricted", "intermediate"]
 
         results = {} # diccionario termino:distancia
-        dist_algo = pick_distance(distance)
-
+        dist_algo = self.pick_distance(distance)
         for element in self.vocabulary:
-            dist = dist_algo(element, term, threshold)
+            dist = dist_algo(term, element, threshold)
             if dist <= threshold:
                 results[element] = dist
+        print(dist_algo("quixot", "quieto", 3))
         return results
 
 class TrieSpellSuggester(SpellSuggester):
@@ -72,14 +81,8 @@ class TrieSpellSuggester(SpellSuggester):
         self.trie = Trie(self.vocabulary)
     
 if __name__ == "__main__":
-    spellsuggester = TrieSpellSuggester("./corpora/quijote.txt")
-    print(spellsuggester.suggest("casa"))
+    spellsuggester = SpellSuggester("./corpora/quijote.txt")
+    print(spellsuggester.suggest("quixot", threshold=2))
     # cuidado, la salida es enorme print(suggester.trie)
 
-def pick_distance(distance):
-    if distance == "levenshtein":
-        return dp_levenshtein_threshold
-    elif distance == "restricted":
-        return dp_restricted_damerau_threshold
-    else:
-        return dp_intermediate_damerau_threshold
+

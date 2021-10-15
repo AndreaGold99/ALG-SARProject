@@ -28,7 +28,7 @@ def dp_levenshtein_threshold(x, y, th):
     #Return min between current and th + 1
     return min(currentrow[len(x)], th + 1)
 
-def dp_restricted_damerau_threshold(x, y, th):
+def dp_restricted_damerau_threshold(x, y, th):  
     currentrow = [0]*(1+len(x))
     previousrow = [0]*(1+len(x))
     previousrow2 = [0]*(1+len(x))
