@@ -5,7 +5,6 @@
 
 
 """ ALL FUNCTIONS ARE A SMALL VARIATON FROM PART1, JUST CHECK IF STATEMENTS"""
-import pdb
 
 def dp_levenshtein_threshold(x, y, th):
     """Same as the function on test_1, but checks min value with threshold"""

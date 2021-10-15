@@ -2,7 +2,14 @@ import numpy as np
 from trie import Trie
 
 def dp_levenshtein_trie(x, trie, th):
-    # TODO
+	current = [0] * trie.get_num_states
+	previous = [0] * trie.get_num_states
+
+	for c in range(1, len(current)):
+		#Mira quien es el padre del estado c
+		index = trie.get_parent(c)
+		#Lo que me cuesta 
+		current[c] = current[index] + 1
     return []
 
 def dp_restricted_damerau_trie(x, trie, th):
