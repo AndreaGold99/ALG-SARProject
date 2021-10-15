@@ -2,15 +2,30 @@ import numpy as np
 from trie import Trie
 
 def dp_levenshtein_trie(x, trie, th):
-	current = [0] * trie.get_num_states
-	previous = [0] * trie.get_num_states
+	current = [0] * trie.get_num_states()
+	previous = [0] * trie.get_num_states()
 
 	for c in range(1, len(current)):
 		#Mira quien es el padre del estado c
 		index = trie.get_parent(c)
 		#Lo que me cuesta 
 		current[c] = current[index] + 1
-    return []
+
+	for letter in x:
+		previous, current = current, previous
+		current[0] = previous[0] + 1
+		for st in range(trie.get_num_states()):
+			parent = trie.get_parent(st)
+			current[st] = min(current[parent] + 1,
+							previous[st] + 1,
+							previous[parent] + (letter != trie.get_label(st))
+			)
+		if min(current) > th:
+			return {}
+	
+	aux = {trie.get_output(st):current[st] for st in range(trie.get_num_states()) if trie.is_final(st) and current[st] <= th}
+
+	return list(aux.items())
 
 def dp_restricted_damerau_trie(x, trie, th):
     # TODO
