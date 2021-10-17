@@ -27,6 +27,48 @@ def dp_levenshtein_threshold(x, y, th):
     #Return min between current and th + 1
     return min(currentrow[len(x)], th + 1)
 
+def dp_levenshtein_threshold_optimistic(x, y, th):
+    """Same as the function on test_1, but checks min value with threshold"""
+    currentrow = [0]*(1+len(x))
+    previousrow = [0]*(1+len(x))
+    currentrow[0] = 0
+    basedict = dict()
+    for letter in (x+y):
+        basedict[letter] = 0
+    dictx = basedict.copy()
+    dicty = basedict.copy()
+    for letter in x:
+        dictx[letter] += 1
+    for letter in y:
+        dicty[letter] += 1
+    for key in basedict.keys():
+        basedict[key] = dictx[key] - dicty[key]
+    listacota = list(basedict.values())
+    cotamax = 0
+    cotamin = 0
+    for num in listacota:
+        if num > 0:
+            cotamax += num
+        else:
+            cotamin -= num
+    if (th < max(cotamax,cotamin)):
+        return th + 1
+
+    for i in range(1, len(x) + 1):
+        currentrow[i] = currentrow[i-1] + 1
+    for j in range(1, len(y) + 1):
+        previousrow, currentrow = currentrow, previousrow
+        currentrow[0] = previousrow[0] + 1
+        for i in range(1, len(x) + 1):
+            currentrow[i] = min(currentrow[i-1] + 1,
+                previousrow[i] + 1,
+                previousrow[i-1] + (x[i-1] != y[j-1]))
+        #Threshold of currentrow
+        if min(currentrow) > th:
+            return th + 1
+    #Return min between current and th + 1
+    return min(currentrow[len(x)], th + 1)
+
 def dp_restricted_damerau_threshold(x, y, th):  
     currentrow = [0]*(1+len(x))
     previousrow = [0]*(1+len(x))
@@ -86,7 +128,8 @@ test = [
         ("algoritmo","lagortimo"),
         ("algoritmo","agaloritom"),
         ("algoritmo","algormio"),
-        ("acb","ba")
+        ("acb","ba"),
+        ("cota","increiblemente superior")
         ]
 
 thrs = range(1,4)
@@ -96,7 +139,7 @@ if __name__=="__main__":
         print(f"thresholds: {threshold:3}")
         for x,y in test:
             print(f"{x:12} {y:12} \t",end="")
-            for dist,name in ((dp_levenshtein_threshold,"levenshtein"),
+            for dist,name in ((dp_levenshtein_threshold_optimistic,"levenshtein"),
                             (dp_restricted_damerau_threshold,"restricted"),
                             (dp_intermediate_damerau_threshold,"intermediate")):
 
