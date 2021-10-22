@@ -1,8 +1,10 @@
 import time
 import collections
 import re
+import random
+import math
 from spellsuggest import SpellSuggester, TrieSpellSuggester
-import trie
+
 
 def read_file(vocab_file_path = "./corpora/quijote.txt"):
     tokenizer = re.compile("\W+")
@@ -18,7 +20,7 @@ def read_file(vocab_file_path = "./corpora/quijote.txt"):
 def build_trie (vocab, n):
     return TrieSpellSuggester(sorted(vocab[:n]))
 
-def suggest(vocab, n):
+def build_suggest(vocab, n):
      s = SpellSuggester(vocab[:n])
      return s
 
@@ -46,4 +48,9 @@ def measure_time(function, arguments,
     return accum/count, returned_value
 
 if __name__ == "__main__":
-    print("hola mundo")
+    vocab = read_file()
+    n = 20
+    trie_vocab = build_trie(vocab, n)
+    suggest_vocab = build_suggest(vocab, n)
+    elems = random.sample(suggest_vocab.vocabulary, math.ceil(n/4))
+    print(elems)
