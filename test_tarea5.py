@@ -16,8 +16,11 @@ def read_file(vocab_file_path = "./corpora/quijote.txt"):
         return sorted_vocab
 
 def build_trie (vocab, n):
-    aux = vocab[:n+1]
-    trie(sorted(aux))
+    return TrieSpellSuggester(sorted(vocab[:n]))
+
+def suggest(vocab, n):
+     s = SpellSuggester(vocab[:n])
+     return s
 
 def dummy_function(prepare_args=()):
     return "hello world"
@@ -41,3 +44,6 @@ def measure_time(function, arguments,
         accum += time.process_time()-t_ini
         count += 1
     return accum/count, returned_value
+
+if __name__ == "__main__":
+    print("hola mundo")

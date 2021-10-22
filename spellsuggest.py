@@ -20,8 +20,11 @@ class SpellSuggester:
             vocab_file (str): ruta del fichero de texto para cargar el vocabulario.
 
         """
-
-        self.vocabulary  = self.build_vocab(vocab_file_path, tokenizer=re.compile("\W+"))
+        #Hemos añadido un if para saber si es vocabulario o path
+        if type(vocab_file_path) is str: 
+            self.vocabulary  = self.build_vocab(vocab_file_path, tokenizer=re.compile("\W+"))
+        else:
+            self.vocabulary = vocab_file_path
 
     def pick_distance(self, distance):
         if distance == "levenshtein":
