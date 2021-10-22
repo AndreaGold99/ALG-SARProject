@@ -2,6 +2,7 @@ import time
 import collections
 import re
 from spellsuggest import SpellSuggester, TrieSpellSuggester
+import trie
 
 def read_file(vocab_file_path = "./corpora/quijote.txt"):
     tokenizer = re.compile("\W+")
@@ -13,6 +14,10 @@ def read_file(vocab_file_path = "./corpora/quijote.txt"):
         sorted_reversed = sorted(reversed_c, reverse=True)
         sorted_vocab = [word for (freq,word) in sorted_reversed]
         return sorted_vocab
+
+def build_trie (vocab, n):
+    aux = vocab[:n+1]
+    trie(sorted(aux))
 
 def dummy_function(prepare_args=()):
     return "hello world"
