@@ -3,6 +3,7 @@ import collections
 import re
 import random
 import math
+import numpy as np
 from spellsuggest import SpellSuggester, TrieSpellSuggester
 
 
@@ -21,8 +22,8 @@ def build_trie (vocab, n):
     return TrieSpellSuggester(sorted(vocab[:n]))
 
 def build_suggest(vocab, n):
-     s = SpellSuggester(vocab[:n])
-     return s
+    s = SpellSuggester(vocab[:n])
+    return s
 
 def dummy_function(prepare_args=()):
     return "hello world"
@@ -36,7 +37,8 @@ def measure_time(function, arguments,
     #necesarias para medir adecuadamente (ej: si mides el tiempo de
     #ordenar algo y lo deja ordenado, la próxima vez que ordenes no
     #estará desordenado)
-    #DEVUELVE: tiempo y el valor devuelto por la función 
+    #DEVUELVE: tiempo y el valor devuelto por la función
+    #ESTA FUNCION SE IGNORA
 
     count, accum = 0, 0
     while accum < 0.1:
@@ -47,10 +49,33 @@ def measure_time(function, arguments,
         count += 1
     return accum/count, returned_value
 
-if __name__ == "__main__":
+def check_times():
     vocab = read_file()
-    n = 20
-    trie_vocab = build_trie(vocab, n)
-    suggest_vocab = build_suggest(vocab, n)
-    elems = random.sample(suggest_vocab.vocabulary, math.ceil(n/4))
-    print(elems)
+    print("TALLA\tDISTANCIA\tTHRESHOLD\tMEDIA\tMEDIANA\tDEV.TIPICA")
+    print("-"*64)
+    #Va haciendo saltos de 1500 en 1500 con todas las palabras
+    for talla in range(2500, len(vocab), 2500):
+        #Creamos los vocabularios del suggest y del trie con un size talla
+        trie_vocab = build_trie(vocab, talla)
+        suggest_vocab = build_suggest(vocab, talla)
+        #Probamos rodas las distancias
+        for dist in ["levenshtein", "restricted", "intermediate"]:
+            #10 palabras aleatorias
+            muestra = random.sample(suggest_vocab.vocabulary, 10)
+            t1, t2 = 0, 0
+            #Para cada threshold vamos a calcular tiempos sin importar el threshold
+            for th in range(1,6):
+                tiempos = []
+                for word in muestra:
+                    t1 = time.process_time() 
+                    suggest_vocab.suggest(word, dist, th)
+                    t2 = time.process_time() - t1
+                    tiempos.append(t2)
+                mn = round(np.mean(tiempos),3)
+                med = round(np.median(tiempos), 3)
+                dev = round(np.std(tiempos), 3)
+                print(f"{talla}\t{dist}\t {th}\t\t{mn}\t{med}\t{dev}")
+        print("-"*64)
+
+if __name__ == "__main__":
+    check_times()
