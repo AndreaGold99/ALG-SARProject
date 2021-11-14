@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from test_tarea2_plantilla import dp_intermediate_damerau_threshold, dp_levenshtein_threshold, dp_restricted_damerau_threshold
+from test_tarea2_plantilla import dp_intermediate_damerau_threshold, dp_levenshtein_threshold, dp_restricted_damerau_threshold, dp_levenshtein_threshold_optimistic
 from trie import Trie
 import pdb
 
@@ -31,6 +31,8 @@ class SpellSuggester:
             return dp_levenshtein_threshold
         elif distance == "restricted":
             return dp_restricted_damerau_threshold
+        elif distance == "optimistic":
+            return dp_levenshtein_threshold_optimistic
         else:
             return dp_intermediate_damerau_threshold
 
@@ -49,15 +51,6 @@ class SpellSuggester:
             vocab = set(tokenizer.split(fr.read().lower()))
             vocab.discard('') # por si acaso
             return sorted(vocab)
-    
-
-    def pick_distance(self, distance):
-        if distance == "levenshtein":
-            return dp_levenshtein_threshold
-        elif distance == "restricted":
-            return dp_restricted_damerau_threshold
-        else:
-            return dp_intermediate_damerau_threshold
 
     def suggest(self, term, distance="levenshtein", threshold=0):
 
@@ -73,7 +66,7 @@ class SpellSuggester:
                 puede utilizarse con los algoritmos de distancia mejorada de la tarea 2
                 o filtrando la salida de las distancias de la tarea 2
         """
-        assert distance in ["levenshtein", "restricted", "intermediate"]
+        assert distance in ["levenshtein", "restricted", "intermediate", "optimistic"]
 
         results = {} # diccionario termino:distancia
         dist_algo = self.pick_distance(distance)

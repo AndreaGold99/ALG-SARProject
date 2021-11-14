@@ -52,14 +52,13 @@ def measure_time(function, arguments,
 def check_times():
     vocab = read_file()
     print("TALLA\tDISTANCIA\tTHRESHOLD\tMEDIA\tMEDIANA\tDEV.TIPICA")
-    print("-"*64)
-    #Va haciendo saltos de 1500 en 1500 con todas las palabras
-    for talla in range(2500, len(vocab), 2500):
-        #Creamos los vocabularios del suggest y del trie con un size talla
-        trie_vocab = build_trie(vocab, talla)
-        suggest_vocab = build_suggest(vocab, talla)
-        #Probamos rodas las distancias
-        for dist in ["levenshtein", "restricted", "intermediate"]:
+    print("-"*6)
+    #Distancias sin el trie
+    for dist in ["levenshtein", "restricted", "intermediate", "optimistic"]:
+        for talla in range(2500, len(vocab), 2000):
+            #Creamos los vocabularios del suggest y del trie con un size talla
+            trie_vocab = build_trie(vocab, talla)
+            suggest_vocab = build_suggest(vocab, talla)
             #10 palabras aleatorias
             muestra = random.sample(suggest_vocab.vocabulary, 10)
             t1, t2 = 0, 0
@@ -67,15 +66,16 @@ def check_times():
             for th in range(1,6):
                 tiempos = []
                 for word in muestra:
-                    t1 = time.process_time() 
+                    t1 = time.process_time()
                     suggest_vocab.suggest(word, dist, th)
                     t2 = time.process_time() - t1
                     tiempos.append(t2)
                 mn = round(np.mean(tiempos),3)
                 med = round(np.median(tiempos), 3)
                 dev = round(np.std(tiempos), 3)
-                print(f"{talla}\t{dist}\t {th}\t\t{mn}\t{med}\t{dev}")
-        print("-"*64)
+                print(f"{talla}\t{dist}\t{th}\t\t{mn}\t{med}\t{dev}")
+            print("\n")
+        print("#"*64)
 
 if __name__ == "__main__":
     check_times()
