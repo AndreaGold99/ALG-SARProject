@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 import re
-from test_tarea2_plantilla import dp_intermediate_damerau_threshold, dp_levenshtein_threshold, dp_restricted_damerau_threshold, dp_levenshtein_threshold_optimistic
+from test_tarea2_plantilla import (
+    dp_intermediate_damerau_threshold,
+    dp_levenshtein_threshold,
+    dp_restricted_damerau_threshold,
+    dp_levenshtein_threshold_optimistic,
+)
+import numpy as np
 from trie import Trie
-import pdb
+from test_tarea4_plantilla import dp_levenshtein_trie
+
 
 class SpellSuggester:
 
@@ -20,9 +27,11 @@ class SpellSuggester:
             vocab_file (str): ruta del fichero de texto para cargar el vocabulario.
 
         """
-        #Hemos añadido un if para saber si es vocabulario o path
-        if type(vocab_file_path) is str: 
-            self.vocabulary  = self.build_vocab(vocab_file_path, tokenizer=re.compile("\W+"))
+        # Hemos añadido un if para saber si es vocabulario o path
+        if type(vocab_file_path) is str:
+            self.vocabulary = self.build_vocab(
+                vocab_file_path, tokenizer=re.compile("\W+")
+            )
         else:
             self.vocabulary = vocab_file_path
 
@@ -47,9 +56,9 @@ class SpellSuggester:
             vocab_file (str): ruta del fichero de texto para cargar el vocabulario.
             tokenizer (re.Pattern): expresión regular para la tokenización.
         """
-        with open(vocab_file_path, "r", encoding='utf-8') as fr:
+        with open(vocab_file_path, "r", encoding="utf-8") as fr:
             vocab = set(tokenizer.split(fr.read().lower()))
-            vocab.discard('') # por si acaso
+            vocab.discard("")  # por si acaso
             return sorted(vocab)
 
     def suggest(self, term, distance="levenshtein", threshold=0):
@@ -61,14 +70,14 @@ class SpellSuggester:
         Args:
             term (str): término de búsqueda.
             distance (str): algoritmo de búsqueda a utilizar
-                {"levenshtein", "restricted", "intermediate"}.
+                {"levenshtein", "restricted", "intermediate", "optimistic"}.
             threshold (int): threshold para limitar la búsqueda
                 puede utilizarse con los algoritmos de distancia mejorada de la tarea 2
                 o filtrando la salida de las distancias de la tarea 2
         """
         assert distance in ["levenshtein", "restricted", "intermediate", "optimistic"]
 
-        results = {} # diccionario termino:distancia
+        results = {}  # diccionario termino:distancia
         dist_algo = self.pick_distance(distance)
         for voc in self.vocabulary:
             if abs(len(term) - len(voc)) <= threshold:
@@ -77,17 +86,21 @@ class SpellSuggester:
                     results[voc] = dist
         return results
 
+
 class TrieSpellSuggester(SpellSuggester):
     """
     Clase que implementa el método suggest para la búsqueda de términos y añade el trie
     """
+
     def __init__(self, vocab_file_path):
         super().__init__(vocab_file_path)
         self.trie = Trie(self.vocabulary)
-    
+
+    def suggest(self, term, threshold=0):
+        results = dp_levenshtein_trie(term, self.trie, threshold)
+
+
 if __name__ == "__main__":
     spellsuggester = SpellSuggester("./corpora/quijote.txt")
     print(spellsuggester.suggest("quixot", threshold=2))
     # cuidado, la salida es enorme print(suggester.trie)
-
-
