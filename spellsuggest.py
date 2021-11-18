@@ -94,10 +94,11 @@ class TrieSpellSuggester(SpellSuggester):
 
     def __init__(self, vocab_file_path):
         super().__init__(vocab_file_path)
-        self.trie = Trie(self.vocabulary)
+        self.trie = Trie(sorted(self.vocabulary))
 
     def suggest(self, term, threshold=0):
-        results = dp_levenshtein_trie(term, self.trie, threshold)
+        return dp_levenshtein_trie(term, self.trie, threshold)
+    
 
 
 if __name__ == "__main__":

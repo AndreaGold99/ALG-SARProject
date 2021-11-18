@@ -2,7 +2,7 @@ import json
 from nltk.stem.snowball import SnowballStemmer
 import os
 import re
-
+from spellsuggest import SpellSuggester, TrieSpellSuggester
 
 class SAR_Project:
     """
@@ -45,12 +45,16 @@ class SAR_Project:
         self.weight = {} # hash de terminos para el pesado, ranking de resultados. puede no utilizarse
         self.news = {} # hash de noticias --> clave entero (newid), valor: la info necesaria para diferenciar la noticia dentro de su fichero (doc_id y posición dentro del documento)
         #Integer : (doc_id,pos) 
+        self.trie = []
+        
         self.tokenizer = re.compile("\W+") # expresion regular para hacer la tokenizacion
         self.stemmer = SnowballStemmer('spanish') # stemmer en castellano
         self.show_all = False # valor por defecto, se cambia con self.set_showall()
         self.show_snippet = False # valor por defecto, se cambia con self.set_snippet()
         self.use_stemming = False # valor por defecto, se cambia con self.set_stemming()
         self.use_ranking = False  # valor por defecto, se cambia con self.set_ranking()
+        
+        self.use_trie = False
 
 
     ###############################
@@ -74,6 +78,16 @@ class SAR_Project:
         """
         self.show_all = v
 
+
+    def set_trie(self, v):
+        """Crea el trie a usar
+        
+            input: "v" booleano
+
+            Usa el Trie para calculo de distancia 
+
+        """
+        self.use_trie = v
 
     def set_snippet(self, v):
         """
@@ -155,6 +169,9 @@ class SAR_Project:
         #Opción de permuterm activada
         if self.permuterm:
             self.make_permuterm()
+        if self.use_trie:
+            self.make_trie()
+            
 
         
 
@@ -297,7 +314,15 @@ class SAR_Project:
                         #Si está
                         self.ptindex[k][permu].append(term)    
 
-
+    def make_trie(self):
+        """ Construye el trie en base a todos los términos de todos los campos
+        """
+        aux = []
+        for c,k in self.index.items():
+            for t in k.keys():
+                if t not in self.trie:
+                    aux += [t]
+        self.trie = TrieSpellSuggester(aux)
     def show_stats(self):
         """
         NECESARIO PARA TODAS LAS VERSIONES

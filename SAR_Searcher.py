@@ -25,7 +25,9 @@ if __name__ == "__main__":
     parser.add_argument('-S', '--stem', dest='stem', action='store_true', default=False, 
                     help='use stem index by default.')
 
-
+    parser.add_argument('-th', '--threshold',dest='threshold', metavar='th', type=int,
+                    help = 'threshold to use in case to look up similar terms,\
+                    only useful with "--trie" option or "-distance option"')
     group0 = parser.add_mutually_exclusive_group()
     
     group0.add_argument('-N', '--snippet', dest='snippet', action='store_true', default=False, 
@@ -49,6 +51,12 @@ if __name__ == "__main__":
     group1.add_argument('-T', '--test', dest='test', metavar= 'test', type=str, action='store',
                     help='file with queries and results, for testing.')
 
+    group2 = parser.add_mutually_exclusive_group()
+    group2.add_argument("-TR", "--trie",dest='trie',action='store_true',
+                        default=False,help="use Trie for retrieval of similar terms in case the desired term.\
+                        it's not present.Only Levensthein distance implemented")
+    group2.add_argument("-D", "--distance", dest='distance',type=str, 
+                        choices=['optimistic','restricted','intermediate'],help="distance to use ")
     args = parser.parse_args()
 
     with open(args.index, 'rb') as fh:
@@ -58,6 +66,7 @@ if __name__ == "__main__":
     searcher.set_ranking(args.rank)
     searcher.set_showall(args.all)
     searcher.set_snippet(args.snippet)
+    searcher.set_trie(args.trie)
 
     # se debe contar o mostrar resultados?
     if args.count is True:

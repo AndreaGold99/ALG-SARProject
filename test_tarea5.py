@@ -2,7 +2,6 @@ import time
 import collections
 import re
 import random
-import math
 import numpy as np
 from spellsuggest import SpellSuggester, TrieSpellSuggester
 
@@ -20,12 +19,11 @@ def read_file(vocab_file_path="./corpora/quijote.txt"):
 
 
 def build_trie(vocab, n):
-    return TrieSpellSuggester(sorted(vocab[:n]))
+    return TrieSpellSuggester(sorted(vocab)[:n])
 
 
 def build_suggest(vocab, n):
-    s = SpellSuggester(vocab[:n])
-    return s
+    return SpellSuggester(vocab[:n])
 
 
 def dummy_function(prepare_args=()):
@@ -55,6 +53,8 @@ def measure_time(function, arguments, prepare=dummy_function, prepare_args=()):
 
 def check_times():
     vocab = read_file()
+    muestra = random.sample(vocab, 15)
+    print(muestra)
     print("TALLA\tDISTANCIA\tTHRESHOLD\tMEDIA\tMEDIANA\tDEV.TIPICA")
     print("-" * 6)
     # Distancias sin el trie
@@ -63,7 +63,6 @@ def check_times():
             # Creamos los vocabularios del suggest y del trie con un size talla
             suggest_vocab = build_suggest(vocab, talla)
             # 10 palabras aleatorias
-            muestra = random.sample(suggest_vocab.vocabulary, 10)
             t1, t2 = 0, 0
             # Para cada threshold vamos a calcular tiempos sin importar el threshold
             for th in range(1, 6):
@@ -76,14 +75,14 @@ def check_times():
                 mn = round(np.mean(tiempos), 3)
                 med = round(np.median(tiempos), 3)
                 dev = round(np.std(tiempos), 3)
+                
                 print(f"{talla}\t{dist}\t{th}\t\t{mn}\t{med}\t{dev}")
             print("\n")
+    trie_vocab = build_trie(muestra, len(muestra))
     for talla in range(2500, len(vocab) // 2, 2000):
-        trie_vocab = build_trie(vocab, talla)
-        muestra = random.sample(trie_vocab.vocabulary, 10)
         for th in range(1, 6):
             tiempos = []
-            for word in muestra:
+            for word in vocab[talla]:
                 t1 = time.process_time()
                 trie_vocab.suggest(word, th)
                 t2 = time.process_time() - t1
@@ -94,6 +93,7 @@ def check_times():
             print(f"{talla}\tlevenshtein_trie\t{th}\t\t{mn}\t{med}\t{dev}")
         print("\n")
     print("#" * 64)
+    
 
 
 if __name__ == "__main__":
