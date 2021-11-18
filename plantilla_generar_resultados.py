@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from spellsuggest import SpellSuggester
 
 if __name__ == "__main__":
     spellsuggester = SpellSuggester("./corpora/quijote.txt")

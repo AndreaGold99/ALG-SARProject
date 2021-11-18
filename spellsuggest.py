@@ -4,11 +4,10 @@ from test_tarea2_plantilla import (
     dp_intermediate_damerau_threshold,
     dp_levenshtein_threshold,
     dp_restricted_damerau_threshold,
-    dp_levenshtein_threshold_optimistic,
 )
 import numpy as np
 from trie import Trie
-from test_tarea4_plantilla import dp_levenshtein_trie
+from distancias_trie import dp_levenshtein_trie, dp_restricted_damerau_trie,  dp_intermediate_damerau_trie
 
 
 class SpellSuggester:
@@ -27,7 +26,7 @@ class SpellSuggester:
             vocab_file (str): ruta del fichero de texto para cargar el vocabulario.
 
         """
-        # Hemos añadido un if para saber si es vocabulario o path
+        # Hemos añadido un if para saber si es vocabulario(lista) o path
         if type(vocab_file_path) is str:
             self.vocabulary = self.build_vocab(
                 vocab_file_path, tokenizer=re.compile("\W+")
@@ -36,12 +35,11 @@ class SpellSuggester:
             self.vocabulary = vocab_file_path
 
     def pick_distance(self, distance):
+        """ Distancia a usar en funcion entre las diferentes"""
         if distance == "levenshtein":
             return dp_levenshtein_threshold
         elif distance == "restricted":
             return dp_restricted_damerau_threshold
-        elif distance == "optimistic":
-            return dp_levenshtein_threshold_optimistic
         else:
             return dp_intermediate_damerau_threshold
 
@@ -75,7 +73,7 @@ class SpellSuggester:
                 puede utilizarse con los algoritmos de distancia mejorada de la tarea 2
                 o filtrando la salida de las distancias de la tarea 2
         """
-        assert distance in ["levenshtein", "restricted", "intermediate", "optimistic"]
+        assert distance in ["levenshtein", "restricted", "intermediate"]
 
         results = {}  # diccionario termino:distancia
         dist_algo = self.pick_distance(distance)
@@ -96,8 +94,13 @@ class TrieSpellSuggester(SpellSuggester):
         super().__init__(vocab_file_path)
         self.trie = Trie(sorted(self.vocabulary))
 
-    def suggest(self, term, threshold=0):
-        return dp_levenshtein_trie(term, self.trie, threshold)
+    def suggest(self, term, distance, th=0):
+        if distance == "levensthein":
+            return dp_levenshtein_trie(term, self.trie, th)
+        elif distance == "restricted":
+            return dp_intermediate_damerau_trie(term, self.trie, th)
+        else:
+            return dp_restricted_damerau_trie(term, self.trie, th)
     
 
 

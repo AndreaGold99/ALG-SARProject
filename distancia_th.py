@@ -3,59 +3,50 @@
 # Andrea Cerverón Carot
 # Jose María Valverde García 
 
+def cotamax_min(x,y):
+    """Funcion para comprobar las cotas y terminar antes la distancia de levensthein
 
-""" ALL FUNCTIONS ARE A SMALL VARIATON FROM PART1, JUST CHECK IF STATEMENTS"""
+    Args:
+        x (string): Cadena a comparar
+        y (string): Cadena a comparar
 
-def dp_levenshtein_threshold(x, y, th):
-    """Same as the function on test_1, but checks min value with threshold"""
-    currentrow = [0]*(1+len(x))
-    previousrow = [0]*(1+len(x))
-    currentrow[0] = 0
-
-    for i in range(1, len(x) + 1):
-        currentrow[i] = currentrow[i-1] + 1
-    for j in range(1, len(y) + 1):
-        previousrow, currentrow = currentrow, previousrow
-        currentrow[0] = previousrow[0] + 1
-        for i in range(1, len(x) + 1):
-            currentrow[i] = min(currentrow[i-1] + 1,
-                previousrow[i] + 1,
-                previousrow[i-1] + (x[i-1] != y[j-1]))
-        #Threshold of currentrow
-        if min(currentrow) > th:
-            return th + 1
-    #Return min between current and th + 1
-    return min(currentrow[len(x)], th + 1)
-
-def dp_levenshtein_threshold_optimistic(x, y, th):
-    """Same as the function on test_1, but checks min value with threshold"""
-    currentrow = [0]*(1+len(x))
-    previousrow = [0]*(1+len(x))
-    currentrow[0] = 0
+    Returns:
+        [int]: maximo entre la cota positiva y la negativa
+    """
+    #Creamos un diccionario
     basedict = dict()
+    #Entrada para cada letra
     for letter in (x+y):
         basedict[letter] = 0
+    #Copias del diccionario
     dictx = basedict.copy()
     dicty = basedict.copy()
+    #Incremento positivo y negativo
     for letter in x:
         dictx[letter] += 1
     for letter in y:
         dicty[letter] += 1
+    #Hacemos la resta
     for key in basedict.keys():
         basedict[key] = dictx[key] - dicty[key]
     listacota = list(basedict.values())
-    cotamax = 0
-    cotamin = 0
-    for num in listacota:
-        if num > 0:
-            cotamax += num
-        else:
-            cotamin -= num
-    if (th < max(cotamax,cotamin)):
-        return th + 1
+    #Sumatorio de cotas
+    cotamax = sum([x for x in listacota if x > 0])
+    cotamin = sum([-x for x in listacota if x < 0])
+    return max(cotamax,-cotamin)
 
+def dp_levenshtein_threshold(x, y, th):
+    """Levenshtein distance with threshold"""
+    currentrow = [0]*(1+len(x))
+    previousrow = [0]*(1+len(x))
+    currentrow[0] = 0
+
+    if cotamax_min(x,y) > th:
+        return th + 1
+    
     for i in range(1, len(x) + 1):
         currentrow[i] = currentrow[i-1] + 1
+        
     for j in range(1, len(y) + 1):
         previousrow, currentrow = currentrow, previousrow
         currentrow[0] = previousrow[0] + 1
@@ -81,14 +72,12 @@ def dp_restricted_damerau_threshold(x, y, th):
         previousrow, currentrow, previousrow2 = currentrow, previousrow2, previousrow
         currentrow[0] = previousrow[0] + 1
         for i in range(1, len(x)+1):
-            if i > 1 and j > 1 and x[i-2] == y[j-1] and x[i-1] == y[j-2]:
-                aux = previousrow2[i-2] + 1
-            else:
-                aux = 10000
+
             currentrow[i] = min(currentrow[i-1] + 1,
                 previousrow[i] + 1,
-                previousrow[i-1]+(x[i-1] != y[j-1]),
-                aux)
+                previousrow[i-1]+(x[i-1] != y[j-1]))
+            if i > 1 and j > 1 and x[i-2] == y[j-1] and x[i-1] == y[j-2]:
+                currentrow[i] = min(currentrow[i], previousrow2[i-2] + 1)
         if min(currentrow) > th:
             return th + 1
     return min(currentrow[len(x)], th + 1)
@@ -139,7 +128,7 @@ if __name__=="__main__":
         print(f"thresholds: {threshold:3}")
         for x,y in test:
             print(f"{x:12} {y:12} \t",end="")
-            for dist,name in ((dp_levenshtein_threshold_optimistic,"levenshtein"),
+            for dist,name in ((dp_levenshtein_threshold,"levenshtein"),
                             (dp_restricted_damerau_threshold,"restricted"),
                             (dp_intermediate_damerau_threshold,"intermediate")):
 

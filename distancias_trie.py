@@ -1,6 +1,5 @@
 import numpy as np
 from trie import Trie
-import time
 import pdb
 
 def dp_levenshtein_trie(x, trie, th):
@@ -58,16 +57,16 @@ def dp_restricted_damerau_trie(x, trie, th):
                 aux)
 
         if min(current) > th:
-                return []
+                return {}
         last = letter
-    return [
-        (trie.get_output(st),current[st])
+    return {
+        trie.get_output(st):current[st]
         for st in range(trie.get_num_states())
         if trie.is_final(st) and current[st] <= th
-    ]
+    }
 
 
-def dp_intermediate_damerau_trie(x, trie, th):
+def dp_intermediate_damerau_trie(y, trie, th):
     states = trie.get_num_states()
     current = np.zeros(states)
     previous = np.zeros(states)
@@ -75,48 +74,48 @@ def dp_intermediate_damerau_trie(x, trie, th):
     previous3 = np.zeros(states)
     for c in range(1, len(current)):
         current[c] = current[trie.get_parent(c)] + 1
-    for l in range(len(x)):
-        previous, current, previous2 = current, previous2, previous
+    for j in range(len(y)):
+        previous, previous2, previous3, previous3, current  = current, previous, previous2, previous2, previous3
         current[0] = previous[0] + 1
-        for st in range(1,states):
-            parent = trie.get_parent(st)
+        for i in range(1,states):
+
+            parent = trie.get_parent(i)
             parent2 = trie.get_parent(parent)
-            current[st] = min(current[parent] + 1,
-                previous[st] + 1,
-                previous[parent] + (x[l] != trie.get_label(st)))
-            if x[l] == "b":
-                pdb.set_trace()
-            if parent > 0 and x[l-1] == trie.get_label(st) and x[l]== trie.get_label(parent):
-                current[st] = min(previous[parent2] + 1,current[st])
+            current[i] = min(current[parent] + 1,
+                previous[i] + 1,
+                previous[parent] + (y[j] != trie.get_label(i)))
+            
+            if parent > 0 and j > 0 and y[j-1] == trie.get_label(i) and y[j]== trie.get_label(parent):
+                current[i] = min(previous2[parent2] + 1,current[i])
                 
-            if l > 1 and parent2 > -1 and x[l-1] == trie.get_label(st) and x[l] == trie.get_label(parent2):
-                current[st] = min(previous2[parent2] + 2,current[st])
+            if parent > 0  and  j > 0 and y[j-1] == trie.get_label(i) and y[j] == trie.get_label(parent2):
+                current[i] = min(previous3[parent2] + 2,current[i])
                 
-            if l > 1 and parent > 0 and x[l-2] == trie.get_label(st) and x[l] == trie.get_label(parent):
-                current[st] = min(previous[parent2] + 2, current[st])
+            if j > 1 and parent > 0 and y[j-2] == trie.get_label(i) and y[j] == trie.get_label(parent):
+                current[i] = min(previous2[trie.get_parent(parent2)] + 2, current[i])
         if min(current) > th:
-                return []
-    return [
-        (trie.get_output(st),current[st])
+                return {}
+    
+    return {
+        trie.get_output(st):current[st]
         for st in range(trie.get_num_states())
         if trie.is_final(st) and current[st] <= th
-    ]
+    }
 
-words = ["ba"]
-#["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba"]
+words = ["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba"]
 
 
 words.sort()
 trie = Trie(words)
 
-test = ["acb","algoritmo"]
+test = ["algoritmo","acb"]
 thrs = range(1, 4)
 for threshold in thrs:
     print(f"threshols: {threshold:3}")
     for x in test:
         for dist, name in (
-            #(dp_levenshtein_trie, "levenshtein"),
-            #(dp_restricted_damerau_trie, "restricted"),
+            (dp_levenshtein_trie, "levenshtein"),
+            (dp_restricted_damerau_trie, "restricted"),
             (dp_intermediate_damerau_trie, "intermediate"),
         ):
             dist(x, trie, threshold)

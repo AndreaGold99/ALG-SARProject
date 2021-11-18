@@ -1,6 +1,4 @@
 # version 1.1
-
-
 import argparse
 import pickle
 import sys

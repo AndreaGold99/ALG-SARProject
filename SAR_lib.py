@@ -172,6 +172,8 @@ class SAR_Project:
         if self.use_trie:
             self.make_trie()
             
+    #{"aritcle":{"termino":[1,2,3]}, "tags": {"hosteleria": [1,2,3,4]}}
+            
 
         
 

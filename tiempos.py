@@ -1,3 +1,4 @@
+
 import time
 import collections
 import re
@@ -58,7 +59,7 @@ def check_times():
     print("TALLA\tDISTANCIA\tTHRESHOLD\tMEDIA\tMEDIANA\tDEV.TIPICA")
     print("-" * 6)
     # Distancias sin el trie
-    for dist in ["levenshtein", "restricted", "intermediate", "optimistic"]:
+    for dist in ["levenshtein", "restricted", "intermediate"]:
         for talla in range(2500, len(vocab) // 2, 2000):
             # Creamos los vocabularios del suggest y del trie con un size talla
             suggest_vocab = build_suggest(vocab, talla)
@@ -79,18 +80,19 @@ def check_times():
                 print(f"{talla}\t{dist}\t{th}\t\t{mn}\t{med}\t{dev}")
             print("\n")
     trie_vocab = build_trie(muestra, len(muestra))
-    for talla in range(2500, len(vocab) // 2, 2000):
-        for th in range(1, 6):
-            tiempos = []
-            for word in vocab[talla]:
-                t1 = time.process_time()
-                trie_vocab.suggest(word, th)
-                t2 = time.process_time() - t1
-                tiempos.append(t2)
-            mn = round(np.mean(tiempos), 3)
-            med = round(np.median(tiempos), 3)
-            dev = round(np.std(tiempos), 3)
-            print(f"{talla}\tlevenshtein_trie\t{th}\t\t{mn}\t{med}\t{dev}")
+    for dist in ["levenshtein", "restricted", "intermediate"]:
+        for talla in range(2500, len(vocab) // 2, 2000):
+            for th in range(1, 6):
+                tiempos = []
+                for word in vocab[talla]:
+                    t1 = time.process_time()
+                    trie_vocab.suggest(word,dist, th)
+                    t2 = time.process_time() - t1
+                    tiempos.append(t2)
+                mn = round(np.mean(tiempos), 3)
+                med = round(np.median(tiempos), 3)
+                dev = round(np.std(tiempos), 3)
+                print(f"{talla}\t{dist}_trie\t{th}\t\t{mn}\t{med}\t{dev}")
         print("\n")
     print("#" * 64)
     
