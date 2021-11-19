@@ -59,7 +59,7 @@ def check_times():
     print("TALLA\tDISTANCIA\tTHRESHOLD\tMEDIA\tMEDIANA\tDEV.TIPICA")
     print("-" * 6)
     # Distancias sin el trie
-   """ for dist in ["levenshtein", "restricted", "intermediate"]:
+    for dist in ["levenshtein", "restricted", "intermediate"]:
         for talla in range(2500, len(vocab) // 2, 2000):
             # Creamos los vocabularios del suggest y del trie con un size talla
             suggest_vocab = build_suggest(vocab, talla)
@@ -75,10 +75,9 @@ def check_times():
                     tiempos.append(t2)
                 mn = round(np.mean(tiempos), 3)
                 med = round(np.median(tiempos), 3)
-                dev = round(np.std(tiempos), 3)
-                
+                dev = round(np.std(tiempos), 3) 
                 print(f"{talla}\t{dist}\t{th}\t\t{mn}\t{med}\t{dev}")
-            print("\n")"""
+            print("\n")
     for dist in ["levenshtein", "restricted", "intermediate"]:
         for talla in range(2500, len(vocab) // 2, 2000):
             trie_vocab = build_trie(vocab, talla)

@@ -7,7 +7,7 @@ from distancia_th import (
 import numpy as np
 from trie import Trie
 from distancias_trie import dp_levenshtein_trie, dp_restricted_damerau_trie,  dp_intermediate_damerau_trie
-
+import re
 
 class SpellSuggester:
 

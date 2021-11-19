@@ -104,25 +104,27 @@ def dp_intermediate_damerau_trie(y, trie, th):
         if trie.is_final(st) and current[st] <= th
     }
 
-words = ["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba"]
+
+if __name__ == "__main__":
+    words = ["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba"]
 
 
-words.sort()
-trie = Trie(words)
+    words.sort()
+    trie = Trie(words)
 
-test = ["algoritmo","acb"]
-thrs = range(1, 4)
-for threshold in thrs:
-    print(f"threshols: {threshold:3}")
-    for x in test:
-        for dist, name in (
-            (dp_levenshtein_trie, "levenshtein"),
-            (dp_restricted_damerau_trie, "restricted"),
-            (dp_intermediate_damerau_trie, "intermediate"),
-        ):
-            dist(x, trie, threshold)
-            print(f"\t{x:12} \t{name}\t", end="")
-            print(dist(x, trie, threshold))
+    test = ["algoritmo","acb"]
+    thrs = range(1, 4)
+    for threshold in thrs:
+        print(f"threshols: {threshold:3}")
+        for x in test:
+            for dist, name in (
+                (dp_levenshtein_trie, "levenshtein"),
+                (dp_restricted_damerau_trie, "restricted"),
+                (dp_intermediate_damerau_trie, "intermediate"),
+            ):
+                dist(x, trie, threshold)
+                print(f"\t{x:12} \t{name}\t", end="")
+                print(dist(x, trie, threshold))
 
 """
 Salida del programa:
