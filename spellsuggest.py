@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import re
-from test_tarea2_plantilla import (
+from distancia_th import (
     dp_intermediate_damerau_threshold,
     dp_levenshtein_threshold,
     dp_restricted_damerau_threshold,

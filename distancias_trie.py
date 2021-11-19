@@ -80,19 +80,21 @@ def dp_intermediate_damerau_trie(y, trie, th):
         for i in range(1,states):
 
             parent = trie.get_parent(i)
-            parent2 = trie.get_parent(parent)
             current[i] = min(current[parent] + 1,
                 previous[i] + 1,
                 previous[parent] + (y[j] != trie.get_label(i)))
             
-            if parent > 0 and j > 0 and y[j-1] == trie.get_label(i) and y[j]== trie.get_label(parent):
-                current[i] = min(previous2[parent2] + 1,current[i])
+            if parent > 0 and j > 0:
+                parent2 = trie.get_parent(parent)
+                parent2 = trie.get_parent(parent)
+                if y[j-1] == trie.get_label(i) and y[j]== trie.get_label(parent):
+                    current[i] = min(previous2[parent2] + 1,current[i])
                 
-            if parent > 0  and  j > 0 and y[j-1] == trie.get_label(i) and y[j] == trie.get_label(parent2):
-                current[i] = min(previous3[parent2] + 2,current[i])
+                if y[j-1] == trie.get_label(i) and y[j] == trie.get_label(parent2):
+                    current[i] = min(previous2[trie.get_parent(parent2)] + 2,current[i])
                 
-            if j > 1 and parent > 0 and y[j-2] == trie.get_label(i) and y[j] == trie.get_label(parent):
-                current[i] = min(previous2[trie.get_parent(parent2)] + 2, current[i])
+                if j > 1 and y[j-2] == trie.get_label(i) and y[j] == trie.get_label(parent):
+                    current[i] = min(previous3[parent2] + 2, current[i])
         if min(current) > th:
                 return {}
     
