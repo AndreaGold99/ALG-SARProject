@@ -92,7 +92,7 @@ def check_times():
                 med = round(np.median(tiempos), 3)
                 dev = round(np.std(tiempos), 3)
                 print(f"{talla}\t{dist}_trie\t{th}\t\t{mn}\t{med}\t{dev}")
-        print("\n")
+            print("\n")
     print("#" * 64)
     
 
