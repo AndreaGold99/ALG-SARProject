@@ -84,7 +84,7 @@ class SAR_Project:
         
             input: "v" booleano
 
-            Usa el Trie para calculo de distancia 
+            Usa el Trie para calculo de distancia
 
         """
         self.use_trie = v
@@ -320,10 +320,8 @@ class SAR_Project:
         """ Construye el trie en base a todos los términos de todos los campos
         """
         aux = []
-        for c,k in self.index.items():
-            for t in k.keys():
-                if t not in self.trie:
-                    aux += [t]
+        for k in self.index["article"].keys():
+            aux += [k]
         self.trie = TrieSpellSuggester(aux)
     def show_stats(self):
         """
@@ -522,6 +520,10 @@ class SAR_Project:
         else:
             flist = self.index.get(field,{}) #Sacamos el diccionario de campo 'field'
             plist = flist.get(term,[]) #Devolvemos la posting list del término dentro del campo
+            if plist == [] and field == 'article':
+                self.trie.suggest(term, "levensthein", 3)
+                #TO DO: revisar
+            #Si el field es el article y la consulta no nos devuelve nada => buscamos con trie las palabras y hacer or_posting con ellas
         return plist
 
 
