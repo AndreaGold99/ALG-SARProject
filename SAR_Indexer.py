@@ -8,24 +8,72 @@ from SAR_lib import SAR_Project
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Index a directory with news in json format.')
-    parser.add_argument('newsdir', metavar='newsdir', type=str,
-                        help='directory with the news.')
+    parser = argparse.ArgumentParser(
+        description="Index a directory with news in json format."
+    )
+    parser.add_argument(
+        "newsdir", metavar="newsdir", type=str, help="directory with the news."
+    )
 
-    parser.add_argument('index', metavar='index', type=str,
-                        help='name of the file to save the project object.')
+    parser.add_argument(
+        "index",
+        metavar="index",
+        type=str,
+        help="name of the file to save the project object.",
+    )
 
-    parser.add_argument('-S', '--stem', dest='stem', action='store_true', default=False, 
-                    help='compute stem index.')
+    parser.add_argument(
+        "-S",
+        "--stem",
+        dest="stem",
+        action="store_true",
+        default=False,
+        help="compute stem index.",
+    )
 
-    parser.add_argument('-P', '--permuterm', dest='permuterm', action='store_true', default=False,
-                    help='compute permuterm index.')
+    parser.add_argument(
+        "-P",
+        "--permuterm",
+        dest="permuterm",
+        action="store_true",
+        default=False,
+        help="compute permuterm index.",
+    )
 
-    parser.add_argument('-M', '--multifield', dest='multifield', action='store_true', default=False, 
-                    help='compute index for all the fields.')
+    parser.add_argument(
+        "-M",
+        "--multifield",
+        dest="multifield",
+        action="store_true",
+        default=False,
+        help="compute index for all the fields.",
+    )
 
-    parser.add_argument('-O', '--positional', dest='positional', action='store_true', default=False, 
-                    help='compute positional index.')
+    parser.add_argument(
+        "-O",
+        "--positional",
+        dest="positional",
+        action="store_true",
+        default=False,
+        help="compute positional index.",
+    )
+    group1 = parser.add_mutually_exclusive_group()
+    group1.add_argument(
+        "-TR",
+        "--trie",
+        dest="trie",
+        action="store_true",
+        default=False,
+        help="build trie",
+    )
+    group1.add_argument(
+        "-NTR",
+        "--notrie",
+        dest="notrie",
+        action="store_true",
+        default=False,
+        help="build a vocab without a trie",
+    )
 
     args = parser.parse_args()
 
@@ -36,8 +84,8 @@ if __name__ == "__main__":
     t0 = time.time()
     indexer.index_dir(newsdir, **vars(args))
     t1 = time.time()
-    with open(indexfile, 'wb') as fh:
-            pickle.dump(indexer, fh)
+    with open(indexfile, "wb") as fh:
+        pickle.dump(indexer, fh)
     t2 = time.time()
     indexer.show_stats()
     print("Time indexing: %2.2fs." % (t1 - t0))

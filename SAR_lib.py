@@ -1,13 +1,15 @@
 import json
 from nltk.stem.snowball import SnowballStemmer
 import os
+import pdb
 import re
 from spellsuggest import SpellSuggester, TrieSpellSuggester
+
 
 class SAR_Project:
     """
     Prototipo de la clase para realizar la indexacion y la recuperacion de noticias
-        
+
         Preparada para todas las ampliaciones:
           parentesis + multiples indices + posicionales + stemming + permuterm + ranking de resultado
 
@@ -18,44 +20,61 @@ class SAR_Project:
 
     # lista de campos, el booleano indica si se debe tokenizar el campo
     # NECESARIO PARA LA AMPLIACION MULTIFIELD
-    fields = [("title", True), ("date", False),
-              ("keywords", True), ("article", True),
-              ("summary", True)]
-    
-    
+    fields = [
+        ("title", True),
+        ("date", False),
+        ("keywords", True),
+        ("article", True),
+        ("summary", True),
+    ]
+
     # numero maximo de documento a mostrar cuando self.show_all es False
     SHOW_MAX = 10
 
- 
     def __init__(self):
         """
         Constructor de la classe SAR_Indexer.
         NECESARIO PARA LA VERSION MINIMA
 
         Incluye todas las variables necesaria para todas las ampliaciones.
-        Puedes añadir más variables si las necesitas 
+        Puedes añadir más variables si las necesitas
 
         """
-        self.index = {} # hash para el indice invertido de terminos --> clave: termino, valor: posting list.
-                        # Si se hace la implementacion multifield, se pude hacer un segundo nivel de hashing de tal forma que:
-                        # self.index['title'] seria el indice invertido del campo 'title'.
-        self.sindex = {} # hash para el indice invertido de stems --> clave: stem, valor: lista con los terminos que tienen ese stem
-        self.ptindex = {} # hash para el indice permuterm.
-        self.docs = {} # diccionario de documentos --> clave: entero(docid),  valor: ruta del fichero.
-        self.weight = {} # hash de terminos para el pesado, ranking de resultados. puede no utilizarse
-        self.news = {} # hash de noticias --> clave entero (newid), valor: la info necesaria para diferenciar la noticia dentro de su fichero (doc_id y posición dentro del documento)
-        #Integer : (doc_id,pos) 
-        self.trie = []
-        
-        self.tokenizer = re.compile("\W+") # expresion regular para hacer la tokenizacion
-        self.stemmer = SnowballStemmer('spanish') # stemmer en castellano
-        self.show_all = False # valor por defecto, se cambia con self.set_showall()
-        self.show_snippet = False # valor por defecto, se cambia con self.set_snippet()
-        self.use_stemming = False # valor por defecto, se cambia con self.set_stemming()
-        self.use_ranking = False  # valor por defecto, se cambia con self.set_ranking()
-        
-        self.use_trie = False
+        self.index = (
+            {}
+        )  # hash para el indice invertido de terminos --> clave: termino, valor: posting list.
+        # Si se hace la implementacion multifield, se pude hacer un segundo nivel de hashing de tal forma que:
+        # self.index['title'] seria el indice invertido del campo 'title'.
+        self.sindex = (
+            {}
+        )  # hash para el indice invertido de stems --> clave: stem, valor: lista con los terminos que tienen ese stem
+        self.ptindex = {}  # hash para el indice permuterm.
+        self.docs = (
+            {}
+        )  # diccionario de documentos --> clave: entero(docid),  valor: ruta del fichero.
+        self.weight = (
+            {}
+        )  # hash de terminos para el pesado, ranking de resultados. puede no utilizarse
+        self.news = (
+            {}
+        )  # hash de noticias --> clave entero (newid), valor: la info necesaria para diferenciar la noticia dentro de su fichero (doc_id y posición dentro del documento)
+        # Integer : (doc_id,pos)
+        self.alfabeto = []
 
+        self.tokenizer = re.compile(
+            "\W+"
+        )  # expresion regular para hacer la tokenizacion
+        self.stemmer = SnowballStemmer("spanish")  # stemmer en castellano
+        self.show_all = False  # valor por defecto, se cambia con self.set_showall()
+        self.show_snippet = False  # valor por defecto, se cambia con self.set_snippet()
+        self.use_stemming = (
+            False  # valor por defecto, se cambia con self.set_stemming()
+        )
+        self.use_ranking = False  # valor por defecto, se cambia con self.set_ranking()
+        self.distance = ""
+        self.threshold = 0
+        self.use_trie = False
+        self.use_vocab = False
 
     ###############################
     ###                         ###
@@ -63,12 +82,17 @@ class SAR_Project:
     ###                         ###
     ###############################
 
+    def set_distance(self, cad):
+        self.distance = cad
+
+    def set_threshold(self, th):
+        self.threshold = th
 
     def set_showall(self, v):
         """
 
         Cambia el modo de mostrar los resultados.
-        
+
         input: "v" booleano.
 
         UTIL PARA TODAS LAS VERSIONES
@@ -78,22 +102,24 @@ class SAR_Project:
         """
         self.show_all = v
 
-
     def set_trie(self, v):
         """Crea el trie a usar
-        
-            input: "v" booleano
 
-            Usa el Trie para calculo de distancia
+        input: "v" booleano
+
+        Usa el Trie para calculo de distancia
 
         """
         self.use_trie = v
+
+    def set_vocab(self, v):
+        self.use_vocab = v
 
     def set_snippet(self, v):
         """
 
         Cambia el modo de mostrar snippet.
-        
+
         input: "v" booleano.
 
         UTIL PARA TODAS LAS VERSIONES
@@ -103,12 +129,11 @@ class SAR_Project:
         """
         self.show_snippet = v
 
-
     def set_stemming(self, v):
         """
 
         Cambia el modo de stemming por defecto.
-        
+
         input: "v" booleano.
 
         UTIL PARA LA VERSION CON STEMMING
@@ -118,12 +143,11 @@ class SAR_Project:
         """
         self.use_stemming = v
 
-
     def set_ranking(self, v):
         """
 
         Cambia el modo de ranking por defecto.
-        
+
         input: "v" booleano.
 
         UTIL PARA LA VERSION CON RANKING DE NOTICIAS
@@ -133,49 +157,44 @@ class SAR_Project:
         """
         self.use_ranking = v
 
-
-
-
     ###############################
     ###                         ###
     ###   PARTE 1: INDEXACION   ###
     ###                         ###
     ###############################
 
-
     def index_dir(self, root, **args):
         """
         NECESARIO PARA TODAS LAS VERSIONES
-        
+
         Recorre recursivamente el directorio "root" e indexa su contenido
         los argumentos adicionales "**args" solo son necesarios para las funcionalidades ampliadas
 
         """
-
-        self.multifield = args['multifield']
-        self.positional = args['positional']
-        self.stemming = args['stem']
-        self.permuterm = args['permuterm']
-
+        self.multifield = args["multifield"]
+        self.positional = args["positional"]
+        self.stemming = args["stem"]
+        self.permuterm = args["permuterm"]
+        self.use_trie = args["trie"]
+        self.use_vocab = args["notrie"]
         self.set_stemming(self.stemming)
         for dir, subdirs, files in os.walk(root):
             for filename in files:
-                if filename.endswith('.json'):
+                if filename.endswith(".json"):
                     fullname = os.path.join(dir, filename)
                     self.index_file(fullname)
-        #Opción de stemming activada
+        # Opción de stemming activada
         if self.use_stemming:
             self.make_stemming()
-        #Opción de permuterm activada
+        # Opción de permuterm activada
         if self.permuterm:
             self.make_permuterm()
         if self.use_trie:
             self.make_trie()
-            
-    #{"aritcle":{"termino":[1,2,3]}, "tags": {"hosteleria": [1,2,3,4]}}
-            
+        if self.use_vocab:
+            self.make_vocab()
 
-        
+    # {"aritcle":{"termino":[1,2,3]}, "tags": {"hosteleria": [1,2,3,4]}}
 
     def index_file(self, filename):
         """
@@ -203,25 +222,24 @@ class SAR_Project:
         # "jlist" es, en definitiva, una lista con diccionario dentro con los campos enumerados arriba
         #
         #
-        #Como identificador secuencial vamos a usar la longitud del diccionario + 1
-        #NOTA: El índice comienza en 1 y no en 0
+        # Como identificador secuencial vamos a usar la longitud del diccionario + 1
+        # NOTA: El índice comienza en 1 y no en 0
         self.docs[len(self.docs) + 1] = filename
-        #ID del último docID
+        # ID del último docID
         docID = len(self.docs)
         for i in range(len(jlist)):
-            #Insertanos la noticia con un clave secuencial que depende de la longitud de la lista 
+            # Insertanos la noticia con un clave secuencial que depende de la longitud de la lista
             # y el valor es una tupla (docID,posición)
-            #NOTA: Índice comienza en 1 y no en 0
-            self.news[len(self.news) + 1] = (docID,i)
-            #Noticia en formato de dict.
+            # NOTA: Índice comienza en 1 y no en 0
+            self.news[len(self.news) + 1] = (docID, i)
+            # Noticia en formato de dict.
             new = jlist[i]
             if self.multifield:
-                self.process_field(new,fields=self.fields)
+                self.process_field(new, fields=self.fields)
             else:
                 self.process_field(new)
 
-
-    def process_field(self,new,fields=[('article',True)]):
+    def process_field(self, new, fields=[("article", True)]):
         """
         Dado una noticia, se encarga de añadir los términos a sus correspondientes campos, para la versión multifield
         param:
@@ -229,19 +247,23 @@ class SAR_Project:
         -fields:campos en los que vamos a escribir, útil para la versión mutifield, valor por defecto ('article',True)
                 para la versión básica del proyecto
         """
-        #Recorremos los campos que tienen tuplas (campo, bool)
+        # Recorremos los campos que tienen tuplas (campo, bool)
         for f in fields:
-            if f[1]: content = self.tokenize(new[f[0]]) #Articulo tokenizado y separado por espacios
-            else: content = [new[f[0]]] #date no se tokeniza
-            for term in content: #recorremos los términos del contenido
+            if f[1]:
+                content = self.tokenize(
+                    new[f[0]]
+                )  # Articulo tokenizado y separado por espacios
+            else:
+                content = [new[f[0]]]  # date no se tokeniza
+            for term in content:  # recorremos los términos del contenido
                 aux = self.index.get(f[0], {})
-                #Si el término no se encuentra en el diccionario, creamos la posting list para dicho campo
+                # Si el término no se encuentra en el diccionario, creamos la posting list para dicho campo
                 if term not in aux:
                     aux[term] = [len(self.news)]
-                #Si la ultima noticia añadida es diferente a la actual, añadimos
+                # Si la ultima noticia añadida es diferente a la actual, añadimos
                 elif aux[term][-1] != len(self.news):
                     aux[term].append(len(self.news))
-                #Actualizamos el indice
+                # Actualizamos el indice
                 self.index[f[0]] = aux
 
     def tokenize(self, text):
@@ -256,9 +278,7 @@ class SAR_Project:
         return: lista de tokens
 
         """
-        return self.tokenizer.sub(' ', text.lower()).split()
-
-
+        return self.tokenizer.sub(" ", text.lower()).split()
 
     def make_stemming(self):
         """
@@ -271,26 +291,25 @@ class SAR_Project:
         """
         self.process_stemming_multifield()
 
-
     def process_stemming_multifield(self):
         """
         Hace stemming en cada término de cada field y lo introduce en self.sindex[field]
         """
-        #Obtenemos clave y valor
-        for k,v in self.index.items():
-            #Si no se había creado el campo previamente
+        # Obtenemos clave y valor
+        for k, v in self.index.items():
+            # Si no se había creado el campo previamente
             self.sindex[k] = {}
-            #Recorremos los valores
+            # Recorremos los valores
             for term in v:
-                #Obtenemos el stem de cada término
+                # Obtenemos el stem de cada término
                 stem = self.stemmer.stem(term)
-                #Si el stem no se encuentra en la entrada del field, creamos una lista de 1 elemento
+                # Si el stem no se encuentra en la entrada del field, creamos una lista de 1 elemento
                 if stem not in self.sindex[k]:
                     self.sindex[k][stem] = [term]
-                #Si el término no está en la entrada del field del stem correspondiente
+                # Si el término no está en la entrada del field del stem correspondiente
                 elif term not in self.sindex[k][stem]:
                     self.sindex[k][stem].append(term)
-    
+
     def make_permuterm(self):
         """
         NECESARIO PARA LA AMPLIACION DE PERMUTERM
@@ -298,88 +317,87 @@ class SAR_Project:
         Crea el indice permuterm (self.ptindex) para los terminos de todos los indices.
 
         """
-        for k,v in self.index.items():
-            #Recorremos los valores
+        for k, v in self.index.items():
+            # Recorremos los valores
             self.ptindex[k] = {}
-            #Añadimos símbolo del dolar
+            # Añadimos símbolo del dolar
             for term in v:
-                aux = term + '$'
-                #Obtenemos todas las rotaciones del término
+                aux = term + "$"
+                # Obtenemos todas las rotaciones del término
                 for i in range(len(aux)):
-                    #Obtenemos la permutación
+                    # Obtenemos la permutación
                     permu = aux[i:] + aux[:i]
-                    #Comprobamos si la permutación está en el diccionario
+                    # Comprobamos si la permutación está en el diccionario
                     if permu not in self.ptindex[k]:
-                        #No está, lista
+                        # No está, lista
                         self.ptindex[k][permu] = [term]
                     else:
-                        #Si está
-                        self.ptindex[k][permu].append(term)    
+                        # Si está
+                        self.ptindex[k][permu].append(term)
 
     def make_trie(self):
-        """ Construye el trie en base a todos los términos de todos los campos
-        """
-        aux = []
-        for k in self.index["article"].keys():
-            aux += [k]
-        self.trie = TrieSpellSuggester(aux)
+        """Construye el trie en base a todos los términos de todos los campos"""
+        self.alfabeto = TrieSpellSuggester(list(self.index["article"].keys()))
+
+    def make_vocab(self):
+        self.alfabeto = SpellSuggester(list(self.index["article"].keys()))
+
     def show_stats(self):
         """
         NECESARIO PARA TODAS LAS VERSIONES
-        
+
         Muestra estadisticas de los indices
-        
+
         """
-        print("="*40)
-        print("Number of indexed days: ",len(self.docs))
-        print("-"*40)
-        print("Number of indexed news ",len(self.news))
-        print("-"*40)
+        print("=" * 40)
+        print("Number of indexed days: ", len(self.docs))
+        print("-" * 40)
+        print("Number of indexed news ", len(self.news))
+        print("-" * 40)
         print("TOKENS:")
-        print("# of tokens in 'article':",len(self.index['article']))
+        print("# of tokens in 'article':", len(self.index["article"]))
         if self.multifield:
-            print("# of tokens in 'title':",len(self.index['title']))
-            print("# of tokens in 'date':",len(self.index['date']))
-            print("# of tokens in 'keywords':",len(self.index['keywords']))
-            print("# of toknes in 'summary':",len(self.index['summary']))
+            print("# of tokens in 'title':", len(self.index["title"]))
+            print("# of tokens in 'date':", len(self.index["date"]))
+            print("# of tokens in 'keywords':", len(self.index["keywords"]))
+            print("# of toknes in 'summary':", len(self.index["summary"]))
             if self.permuterm:
-                print("-"*40)
+                print("-" * 40)
                 print("PERMUTERMS:")
-                print("# of permuterms in 'article:'",len(self.ptindex['article']))
-                print("# of permuterms in 'title':",len(self.ptindex['title']))
-                print("# of permuterms in 'date:",len(self.ptindex['date']))
-                print("# of permuterms in 'keywords:'",len(self.ptindex['keywords']))
-                print("# of permuterms in 'summary':",len(self.ptindex['summary']))
+                print("# of permuterms in 'article:'", len(self.ptindex["article"]))
+                print("# of permuterms in 'title':", len(self.ptindex["title"]))
+                print("# of permuterms in 'date:", len(self.ptindex["date"]))
+                print("# of permuterms in 'keywords:'", len(self.ptindex["keywords"]))
+                print("# of permuterms in 'summary':", len(self.ptindex["summary"]))
             if self.use_stemming:
-                print("-"*40)
+                print("-" * 40)
                 print("STEMS:")
-                print("# of stems in 'article':",len(self.sindex['article']))
-                print("# of stems in 'title':",len(self.sindex['title']))
-                print("# of stems in 'date':",len(self.sindex['date']))
-                print("# of stems in 'keywords':",len(self.sindex['keywords']))
-                print("# of stems in 'summary':",len(self.sindex['summary']))
+                print("# of stems in 'article':", len(self.sindex["article"]))
+                print("# of stems in 'title':", len(self.sindex["title"]))
+                print("# of stems in 'date':", len(self.sindex["date"]))
+                print("# of stems in 'keywords':", len(self.sindex["keywords"]))
+                print("# of stems in 'summary':", len(self.sindex["summary"]))
         if self.permuterm:
-            print("-"*40)
+            print("-" * 40)
             print("PERMUTERMS:")
-            print("# of permuterms in 'article:'",len(self.ptindex['article']))
+            print("# of permuterms in 'article:'", len(self.ptindex["article"]))
         if self.use_stemming:
-            print("-"*40)
+            print("-" * 40)
             print("STEMS:")
-            print("# of stems in 'article':",len(self.sindex['article']))
+            print("# of stems in 'article':", len(self.sindex["article"]))
         if self.positional:
-            print("-"*40)
+            print("-" * 40)
             print("Positional queries are  allowed")
         else:
-            print("-"*40)
+            print("-" * 40)
             print("Positional queries are NOT allowed")
-        print("="*40)
-        
+        print("=" * 40)
+
     ###################################
     ###                             ###
     ###   PARTE 2.1: RECUPERACION   ###
     ###                             ###
     ###################################
-
 
     def solve_query(self, query, prev={}):
         """
@@ -396,110 +414,112 @@ class SAR_Project:
         return: posting list con el resultado de la query
 
         """
-        
+
         if query is None or len(query) == 0:
             return []
-        #Obtenemos término y operando
-        newquery = re.split(' ', query)
-        #Pila donde almacenamos los operandos que vamos viendo
+        # Obtenemos término y operando
+        newquery = re.split(" ", query)
+        # Pila donde almacenamos los operandos que vamos viendo
         pila = []
-        #Posting list del primer término
+        # Posting list del primer término
         first = []
-        #Posting list del segundo término
+        # Posting list del segundo término
         second = []
-        #Contador para saber si hemos encontrador paréntesis
+        # Contador para saber si hemos encontrador paréntesis
         parentesis = 0
-        #Creamos una pila para almacenar la subconsulta si es necesario de cara a los paréntesis
+        # Creamos una pila para almacenar la subconsulta si es necesario de cara a los paréntesis
         pilap = []
-        #Hay que hacer todos los términos de la consulta
+        # Hay que hacer todos los términos de la consulta
         while newquery != []:
-            #Sacamos el token de la query
+            # Sacamos el token de la query
             var = newquery.pop(0)
-            #Hemos encontrado un token
-            if var not in ['AND','OR','NOT']:
-                if '(' in var:
-                    #Añadimos todos los parénetesis que tenga el término a su derecha
-                    parentesis += var.count('(')
-                    #Apilamos
+            # Hemos encontrado un token
+            if var not in ["AND", "OR", "NOT"]:
+                if "(" in var:
+                    # Añadimos todos los parénetesis que tenga el término a su derecha
+                    parentesis += var.count("(")
+                    # Apilamos
                     pilap.append(var)
-                    #Quizás el término tiene paréntesis a la derecha, por ejemplo ((valencia)), por lo tanto eso es un único término
-                    if ')' in var:
-                        parentesis -= var.count(')')
-                    #Mientras que no hayamos encontrado la subconsulta entera
+                    # Quizás el término tiene paréntesis a la derecha, por ejemplo ((valencia)), por lo tanto eso es un único término
+                    if ")" in var:
+                        parentesis -= var.count(")")
+                    # Mientras que no hayamos encontrado la subconsulta entera
                     while parentesis > 0:
-                        #Sacamos el siguiente elemento de la lista
+                        # Sacamos el siguiente elemento de la lista
                         var = newquery.pop(0)
-                        #Se abre otra subconsulta dentro de la subconsulta, la función recursiva
-                        #lo resolverá
-                        if '(' in var:
-                            #Contamos el total que haya
-                            parentesis += var.count('(')
-                        #Se cierra subconsulta
-                        elif ')' in var:
-                            #Contamos cuantos tiene 
-                            parentesis -= var.count(')')
-                        #Metemos el token de la consulta
+                        # Se abre otra subconsulta dentro de la subconsulta, la función recursiva
+                        # lo resolverá
+                        if "(" in var:
+                            # Contamos el total que haya
+                            parentesis += var.count("(")
+                        # Se cierra subconsulta
+                        elif ")" in var:
+                            # Contamos cuantos tiene
+                            parentesis -= var.count(")")
+                        # Metemos el token de la consulta
                         pilap.append(var)
-                    #Quitamos el paréntesis inicial del primer token
+                    # Quitamos el paréntesis inicial del primer token
                     pilap[0] = pilap[0][1:]
-                    #Quitamos el paréntesis del final del segundo token
-                    pilap[-1] =  pilap[-1][:-1]
-                    #Almacenamos el resultado de la subconsulta y
-                    #resolvemos de forma recursiva
-                    aux = self.solve_query(' '.join(pilap))
-                    #Limpiamos la pila de operaciones de paréntesis
+                    # Quitamos el paréntesis del final del segundo token
+                    pilap[-1] = pilap[-1][:-1]
+                    # Almacenamos el resultado de la subconsulta y
+                    # resolvemos de forma recursiva
+                    aux = self.solve_query(" ".join(pilap))
+                    # Limpiamos la pila de operaciones de paréntesis
                     pilap = []
-                    #No hemos visto operandos previamente
+                    # No hemos visto operandos previamente
                     if pila == []:
                         first = aux
-                    #Los hemos visto anteriormente, hay que operar
-                    else: 
+                    # Los hemos visto anteriormente, hay que operar
+                    else:
                         second = aux
-                    #Si no hemos visto ningún operando => primer token
+                    # Si no hemos visto ningún operando => primer token
                 elif pila == []:
-                    if ':' in var: #comprobamos si es de un campo específico
-                        j = var.rfind(':') #obtenemos la posición de :
-                        campo = var[:j] #separamos el campo
-                        termino = var[j+1:] #separamos el término
+                    if ":" in var:  # comprobamos si es de un campo específico
+                        j = var.rfind(":")  # obtenemos la posición de :
+                        campo = var[:j]  # separamos el campo
+                        termino = var[j + 1 :]  # separamos el término
                         first = self.get_posting(termino, campo)
 
-                    else: first = self.get_posting(var)
-                    #Hemos encontrado operandos previamente
+                    else:
+                        first = self.get_posting(var)
+                    # Hemos encontrado operandos previamente
                 else:
-                    if ':' in var: #comprobamos si es de un campo específico
-                        j = var.rfind(':') #obtenemos la posición de :
-                        campo = var[:j] #separamos el campo
-                        termino = var[j+1:] #separamos el término
+                    if ":" in var:  # comprobamos si es de un campo específico
+                        j = var.rfind(":")  # obtenemos la posición de :
+                        campo = var[:j]  # separamos el campo
+                        termino = var[j + 1 :]  # separamos el término
                         second = self.get_posting(termino, campo)
 
-                    else: second = self.get_posting(var)
+                    else:
+                        second = self.get_posting(var)
                 if pila != []:
-                    #Vamos haciendo operaciones
+                    # Vamos haciendo operaciones
                     while pila != []:
-                        #¿Cual es el ultimo operando?
+                        # ¿Cual es el ultimo operando?
                         op = pila.pop()
-                        #Es un NOT, reverse a la segunda posting list
-                        if op == 'NOT':
+                        # Es un NOT, reverse a la segunda posting list
+                        if op == "NOT":
                             second = self.reverse_posting(second)
-                        #Es  un AND, hacemos and_posting
-                        elif op == 'AND':
-                            second = self.and_posting(first,second)
-                        #Es un OR, hacemos or_posting
+                        # Es  un AND, hacemos and_posting
+                        elif op == "AND":
+                            second = self.and_posting(first, second)
+                        # Es un OR, hacemos or_posting
                         else:
-                            second = self.or_posting(first,second)
-                    #Guardamos el resultado para más operaciones OwO
+                            second = self.or_posting(first, second)
+                    # Guardamos el resultado para más operaciones OwO
                     first = second
-                #Se trata de un operando, lo añadimos a la pila
+                # Se trata de un operando, lo añadimos a la pila
             else:
                 pila.append(var)
-        #Devolvemos el resultado
+        # Devolvemos el resultado
         return first
- 
-    def get_posting(self, term, field='article'):
+
+    def get_posting(self, term, field="article"):
         """
         NECESARIO PARA TODAS LAS VERSIONES
 
-        Devuelve la posting list asociada a un termino. 
+        Devuelve la posting list asociada a un termino.
         Dependiendo de las ampliaciones implementadas "get_posting" puede llamar a:
             - self.get_positionals: para la ampliacion de posicionales
             - self.get_permuterm: para la ampliacion de permuterms
@@ -512,22 +532,34 @@ class SAR_Project:
         return: posting list
 
         """
-        #La opción de activar el stemming está activa:
-        if ('*' in term or '?' in term) and self.permuterm:
-            plist = self.get_permuterm(term,field)
+        # La opción de activar el stemming está activa:
+        if ("*" in term or "?" in term) and self.permuterm:
+            plist = self.get_permuterm(term, field)
         elif self.use_stemming:
-            plist = self.get_stemming(term,field) #Devolvemos la posting list del término dentro del campo
+            plist = self.get_stemming(
+                term, field
+            )  # Devolvemos la posting list del término dentro del campo
         else:
-            flist = self.index.get(field,{}) #Sacamos el diccionario de campo 'field'
-            plist = flist.get(term,[]) #Devolvemos la posting list del término dentro del campo
-            if plist == [] and field == 'article':
-                self.trie.suggest(term, "levensthein", 3)
-                #TO DO: revisar
-            #Si el field es el article y la consulta no nos devuelve nada => buscamos con trie las palabras y hacer or_posting con ellas
+            flist = self.index.get(field, {})  # Sacamos el diccionario de campo 'field'
+            plist = flist.get(
+                term, []
+            )  # Devolvemos la posting list del término dentro del campo
+            if plist == [] and field == "article" and (self.use_trie or self.use_vocab):
+                # pdb.set_trace()
+                aux = self.alfabeto.suggest(term, self.distance, self.threshold)
+                if len(aux) == 0:
+                    return aux
+                if self.use_trie:
+                    aux = [x[0] for x in aux]
+                else:
+                    aux = list(aux.keys())
+                plist = self.index["article"][aux[0]]  # PL primer termino
+                for i in range(1, len(aux)):
+                    var = self.index["article"].get(aux[i])
+                    plist = self.or_posting(plist, var)
         return plist
 
-
-    def get_positionals(self, terms, field='article'):
+    def get_positionals(self, terms, field="article"):
         """
         NECESARIO PARA LA AMPLIACION DE POSICIONALES
 
@@ -544,7 +576,7 @@ class SAR_Project:
         ## COMPLETAR PARA FUNCIONALIDAD EXTRA DE POSICIONALES ##
         ########################################################
 
-    def get_stemming(self, term, field='article'):
+    def get_stemming(self, term, field="article"):
         """
         NECESARIO PARA LA AMPLIACION DE STEMMING
 
@@ -556,25 +588,25 @@ class SAR_Project:
         return: posting list
 
         """
-        #Sacamos el stem del término
+        # Sacamos el stem del término
         stem = self.stemmer.stem(term)
-        #obtener posting list si existe
-        aux = self.sindex[field].get(stem,[])
-        #Si aux está vacía, devolvemos la lista vacía que está en aux
+        # obtener posting list si existe
+        aux = self.sindex[field].get(stem, [])
+        # Si aux está vacía, devolvemos la lista vacía que está en aux
         if len(aux) == 0:
             return aux
-        #Asignamos a res la lista del primer término 
+        # Asignamos a res la lista del primer término
         res = self.index[field][aux[0]]
-        #Recorremos la lista y vamos aplicando la operación OR
-        for i in range(1,len(aux)):
-            #Posting list del siguiente término
+        # Recorremos la lista y vamos aplicando la operación OR
+        for i in range(1, len(aux)):
+            # Posting list del siguiente término
             var = self.index[field][aux[i]]
-            #OR_posting
-            res = self.or_posting(res,var)
-        #Devolvemos el resultado
+            # OR_posting
+            res = self.or_posting(res, var)
+        # Devolvemos el resultado
         return res
 
-    def get_permuterm(self, term, field='article'):
+    def get_permuterm(self, term, field="article"):
         """
         NECESARIO PARA LA AMPLIACION DE PERMUTERM
 
@@ -589,44 +621,45 @@ class SAR_Project:
         pl = self.obtener_claves_permu(term)
         if pl == []:
             return pl
-        #Asignamos a res la lista del primer término 
+        # Asignamos a res la lista del primer término
         res = self.index[field][pl[0]]
-        #Recorremos la lista y vamos aplicando la operación OR
-        for i in range(1,len(pl)):
-            #Posting list del siguiente término
+        # Recorremos la lista y vamos aplicando la operación OR
+        for i in range(1, len(pl)):
+            # Posting list del siguiente término
             var = self.index[field][pl[i]]
-            #OR_posting
-            res = self.or_posting(res,var)
-        #Devolvemos el resultado
+            # OR_posting
+            res = self.or_posting(res, var)
+        # Devolvemos el resultado
         return res
 
-    def obtener_claves_permu(self,term,field='article'):
+    def obtener_claves_permu(self, term, field="article"):
         """Devuelve la lista de términos asociado a un permuterm
-        param: 
+        param:
             -term: el termino en cuestion del que hay que sacar el permuterm
             -field:campo del diccionario donde se busca,article por default
         return:
             -pl: lista que contiene los términos asociados al permuterm
         """
-        term = term + '$' #Le añadimos al término $ como símbolo de final
-        #Rotaciones del término hasta que el útlimo carácter sea
-        #uno de los indicados
-        while term[-1] != '?' and term[-1] != '*':
-            #Rota término
+        term = term + "$"  # Le añadimos al término $ como símbolo de final
+        # Rotaciones del término hasta que el útlimo carácter sea
+        # uno de los indicados
+        while term[-1] != "?" and term[-1] != "*":
+            # Rota término
             term = term[1:] + term[0]
-        #Devolvemos la posting list de todos los términos cuyo prefijo sea este
-        claves = [t for t in self.ptindex[field].keys() if (term[:-1] == t[:len(term[:-1])])]
-        #La longitud sería la misma ( el ? actúa como un único char)
-        if '?' == term[-1]: 
-            #Lista intensional que comprueba si de los permuterms tienen la misma longitud ( el ? es solo un char)
+        # Devolvemos la posting list de todos los términos cuyo prefijo sea este
+        claves = [
+            t for t in self.ptindex[field].keys() if (term[:-1] == t[: len(term[:-1])])
+        ]
+        # La longitud sería la misma ( el ? actúa como un único char)
+        if "?" == term[-1]:
+            # Lista intensional que comprueba si de los permuterms tienen la misma longitud ( el ? es solo un char)
             claves = [t for t in claves if len(t) == len(term)]
         pl = []
-        #Sacamos todos los términos de cada clave
+        # Sacamos todos los términos de cada clave
         for k in claves:
-            #Añadimos los términos a una lista
+            # Añadimos los términos a una lista
             pl.extend(self.ptindex[field][k])
         return pl
-        
 
     def reverse_posting(self, p):
         """
@@ -637,23 +670,23 @@ class SAR_Project:
         return: posting list con todos los newid exceptos los contenidos en p
 
         """
-        #Recuperamos el nº total de noticias que hay
-        allnews = [i+1 for i in range(len(self.news))]
-        #Posting list resultante 
+        # Recuperamos el nº total de noticias que hay
+        allnews = [i + 1 for i in range(len(self.news))]
+        # Posting list resultante
         pres = []
         i = 0
         j = 0
         while i < len(p) and j < len(allnews):
-            #Si son el mismo término,incrementamos todo en 1 y no añadimos nada al resultado
+            # Si son el mismo término,incrementamos todo en 1 y no añadimos nada al resultado
             if p[i] == allnews[j]:
                 i += 1
                 j += 1
-            #Caso alternativo: allnews[j] < p[i], entonces añadimos el término allnews[j]
+            # Caso alternativo: allnews[j] < p[i], entonces añadimos el término allnews[j]
             elif allnews[j] < p[i]:
                 pres.append(allnews[j])
-                j+=1
-            #No se puede dar el caso de que p[i] < allnews[j]
-        #Si quedan términos sin visitar
+                j += 1
+            # No se puede dar el caso de que p[i] < allnews[j]
+        # Si quedan términos sin visitar
         while j < len(allnews):
             pres.append(allnews[j])
             j += 1
@@ -671,29 +704,29 @@ class SAR_Project:
         return: posting list con los newid incluidos en p1 y p2
 
         """
-        #Indice con el que recorrer la p1
+        # Indice con el que recorrer la p1
         i = 0
-        #Indice con el que recorrer la p2
+        # Indice con el que recorrer la p2
         j = 0
-        #Posting list a devolver
+        # Posting list a devolver
         plres = []
-        #Iteramos en el bucle while mientras no nos salgamos de las listas
+        # Iteramos en el bucle while mientras no nos salgamos de las listas
         while i < len(p1) and j < len(p2):
-            #Si los punteros apuntan al mismo nº, lo añadimos a la posting list
+            # Si los punteros apuntan al mismo nº, lo añadimos a la posting list
             # e incrementamos en 1 los punteros
             if p1[i] == p2[j]:
                 plres.append(p1[i])
                 i += 1
                 j += 1
-            #Si el valor del puntero de p1 < valor puntero p2
-            #incrementamos solo i
+            # Si el valor del puntero de p1 < valor puntero p2
+            # incrementamos solo i
             elif p1[i] < p2[j]:
-                i+=1
-            #Si valor puntero p2 < valor puntero p1
-            #incrementamos j
+                i += 1
+            # Si valor puntero p2 < valor puntero p1
+            # incrementamos j
             else:
-                j+=1
-        #Devolvemos la posting list resultante
+                j += 1
+        # Devolvemos la posting list resultante
         return plres
 
     def or_posting(self, p1, p2):
@@ -708,27 +741,27 @@ class SAR_Project:
         return: posting list con los newid incluidos de p1 o p2
 
         """
-        #Indice con el que recorrer la p1
+        # Indice con el que recorrer la p1
         i = 0
-        #Indice con el que recorrer la 
+        # Indice con el que recorrer la
         j = 0
-        #Posting list a devolver
+        # Posting list a devolver
         plres = []
-        while i < len(p1)  and j <len(p2):
-            #Si p1[i] == p2[j] añadimos solo 1
+        while i < len(p1) and j < len(p2):
+            # Si p1[i] == p2[j] añadimos solo 1
             if p1[i] == p2[j]:
                 plres.append(p1[i])
                 i += 1
                 j += 1
-            #p1[i] < p2[j] => añadimos p1[i] e incrementamos i
+            # p1[i] < p2[j] => añadimos p1[i] e incrementamos i
             elif p1[i] < p2[j]:
                 plres.append(p1[i])
-                i +=1
-            #p1[i] > p2[j] => añadimos p2[j] e incrementamos j
+                i += 1
+            # p1[i] > p2[j] => añadimos p2[j] e incrementamos j
             else:
                 plres.append(p2[j])
                 j += 1
-        #Estos dos bucles son necesarios porque puede que no se haya añadido una lista entera
+        # Estos dos bucles son necesarios porque puede que no se haya añadido una lista entera
         while i < len(p1):
             plres.append(p1[i])
             i += 1
@@ -750,15 +783,12 @@ class SAR_Project:
         return: posting list con los newid incluidos de p1 y no en p2
 
         """
-        #A EXCEPT B se traduce como A AND NOT B, por lo tanto es tan sencillo como devolver 
+        # A EXCEPT B se traduce como A AND NOT B, por lo tanto es tan sencillo como devolver
         p2 = self.reverse_posting(p2)
-        #A AND NOT B lo hacemos
-        pres = self.and_posting(p1,p2)
-        #Devolvemos el la posting list de resultado
+        # A AND NOT B lo hacemos
+        pres = self.and_posting(p1, p2)
+        # Devolvemos el la posting list de resultado
         return pres
-
-
-
 
     #####################################
     ###                               ###
@@ -766,12 +796,11 @@ class SAR_Project:
     ###                               ###
     #####################################
 
-
     def solve_and_count(self, query):
         """
         NECESARIO PARA TODAS LAS VERSIONES
 
-        Resuelve una consulta y la muestra junto al numero de resultados 
+        Resuelve una consulta y la muestra junto al numero de resultados
 
         param:  "query": query que se debe resolver.
 
@@ -781,7 +810,6 @@ class SAR_Project:
         result = self.solve_query(query)
         print("%s\t%d" % (query, len(result)))
         return len(result)  # para verificar los resultados (op: -T)
-
 
     def solve_and_show(self, query):
         """
@@ -796,56 +824,59 @@ class SAR_Project:
         param:  "query": query que se debe resolver.
 
         return: el numero de noticias recuperadas, para la opcion -T
-        
+
         """
-        #Tokenizer 2
-        tok = re.compile(r'AND|OR|NOT')
-        #Posting list resultante
+        # Tokenizer 2
+        tok = re.compile(r"AND|OR|NOT")
+        # Posting list resultante
         result = self.solve_query(query)
-        #Arreglamos el string
+        # Arreglamos el string
         aux = "'" + query + "'"
-        #Imprimimos la query
-        print("Query:",aux)
-        #Imprimimos longitud posting list
+        # Imprimimos la query
+        print("Query:", aux)
+        # Imprimimos longitud posting list
         number = len(result)
-        print("Number of results:",number)
-        #Asignamos score predeterminada
+        print("Number of results:", number)
+        # Asignamos score predeterminada
         score = 0
-        #Está activado show all?
-        number = self.SHOW_MAX if not self.show_all and self.SHOW_MAX < number else number
-        #Recorremos cada documento
+        # Está activado show all?
+        number = (
+            self.SHOW_MAX if not self.show_all and self.SHOW_MAX < number else number
+        )
+        # Recorremos cada documento
         for i in range(number):
-            #Imprimimos el nº de resultado
-            print("#" + str(i+1))
-            #Si usamos score, actualizamos
+            # Imprimimos el nº de resultado
+            print("#" + str(i + 1))
+            # Si usamos score, actualizamos
             if self.use_ranking:
                 score = self.rank_result(result, query)
-            print("Score: ",score)
-            #Sacamos cual es la noticia
+            print("Score: ", score)
+            # Sacamos cual es la noticia
             noticia = result[i]
-            #Imprimimos el identificador de la noticia
+            # Imprimimos el identificador de la noticia
             print("New ID: ", noticia)
-            #Sacamos el documento y posición en la que se encuentra la noticia
-            (docID,pos) = self.news[noticia]
-            #Sacamos el fichero
+            # Sacamos el documento y posición en la que se encuentra la noticia
+            (docID, pos) = self.news[noticia]
+            # Sacamos el fichero
             filename = self.docs[docID]
-            #Abrimos el documento
+            # Abrimos el documento
             with open(filename) as fh:
                 jlist = json.load(fh)
-            #Guardamos la noticia en el documento en una variable
+            # Guardamos la noticia en el documento en una variable
             new = jlist[pos]
-            #Fecha
-            print("Date: ",new['date'])
-            print("Title: ",new['title'])
-            print("Keywords: ",new['keywords'])
+            # Fecha
+            print("Date: ", new["date"])
+            print("Title: ", new["title"])
+            print("Keywords: ", new["keywords"])
             if self.show_snippet:
-                snippet = self.get_summary(self.tokenize(new['article']),tok.sub('',query).split())
+                snippet = self.get_summary(
+                    self.tokenize(new["article"]), tok.sub("", query).split()
+                )
                 print(snippet)
-        
-        return number  
 
+        return number
 
-    def get_summary(self,article,terms):
+    def get_summary(self, article, terms):
         """
         Muestra un snippet de una articulo de acuerdo a unos términos que aparecen en este
         Consideraciones: Si dos términos se encuentran muy juntos, los muestra en una frase, si hay distancia entre
@@ -856,76 +887,87 @@ class SAR_Project:
         return:
         El fragmento de texto en cuestión
         """
-        #Variables auxiliares, en terms y article se mantiene el contenido original para que el bucle for funcione
-        #Por si es subconsulta, eliminamos paréntesis
-        #además no tiene sentido buscar términos que estáne n otros fields
-        terms2 = [re.sub(r'\(|\)','',a) for a in terms if ':' not in a]
-        #article original
+        # Variables auxiliares, en terms y article se mantiene el contenido original para que el bucle for funcione
+        # Por si es subconsulta, eliminamos paréntesis
+        # además no tiene sentido buscar términos que estáne n otros fields
+        terms2 = [re.sub(r"\(|\)", "", a) for a in terms if ":" not in a]
+        # article original
         article2 = article
-        #Si usamos stemming aplicamos stemming a los tokens de ambas listas con un map
+        # Si usamos stemming aplicamos stemming a los tokens de ambas listas con un map
         if self.use_stemming:
-            terms2 = list(map(self.stemmer.stem,terms))
-            article2 = list(map(self.stemmer.stem,article))
-        #Almacenamos la aparición
-        indexes = [(x,article2.index(x)) for x in terms2 if x in article2]
+            terms2 = list(map(self.stemmer.stem, terms))
+            article2 = list(map(self.stemmer.stem, article))
+        # Almacenamos la aparición
+        indexes = [(x, article2.index(x)) for x in terms2 if x in article2]
         if self.permuterm:
-            #Sacamos todos los términos de la consulta con wildcard
-            permus = [p for p in terms2 if '*' in p or '?' in p]
-            #variable auxiliar, guarda todos los términos del permuterm
+            # Sacamos todos los términos de la consulta con wildcard
+            permus = [p for p in terms2 if "*" in p or "?" in p]
+            # variable auxiliar, guarda todos los términos del permuterm
             aux = []
-            #Vamos añadiendo por cada término con una consulta wildcard los términos que aparece en el permuterm
+            # Vamos añadiendo por cada término con una consulta wildcard los términos que aparece en el permuterm
             for p in permus:
                 aux.extend(self.obtener_claves_permu(p))
-            #(termino,posicions)
-            aux = [(x,article.index(x)) for x in aux if x in article]
+            # (termino,posicions)
+            aux = [(x, article.index(x)) for x in aux if x in article]
             indexes.extend(aux)
-            #Elimina términos repetidos
+            # Elimina términos repetidos
             indexes = list(dict.fromkeys(indexes))
-        #Ordenamos por orden de aparición
-        indexes = sorted(indexes,key = lambda tup: tup[1])
-        #Snippet resultado
-        snippet = ''
-        #Variable booleana, explicada más abajo
+        # Ordenamos por orden de aparición
+        indexes = sorted(indexes, key=lambda tup: tup[1])
+        # Snippet resultado
+        snippet = ""
+        # Variable booleana, explicada más abajo
         seen = False
-        #Recorremos todos los índices excepto el último
+        # Recorremos todos los índices excepto el último
         for i in range(len(indexes) - 1):
-            #Índice del primer término
+            # Índice del primer término
             first = indexes[i]
-            #índice del siguiente término
-            last = indexes[i+1]
-            #Comprobamos si estamos al principio del texto
+            # índice del siguiente término
+            last = indexes[i + 1]
+            # Comprobamos si estamos al principio del texto
             j = 3 if first[1] > 3 else 0
-            z = 3 
-            #Si estan a menos de 10 palabras entre ambos, pillamos la frase hasta ahí
+            z = 3
+            # Si estan a menos de 10 palabras entre ambos, pillamos la frase hasta ahí
             if last[1] - first[1] < 10:
-                #Si hemos visto la de ahora, añadimos a partir de la siguiente palabra respecto a la de ahora
+                # Si hemos visto la de ahora, añadimos a partir de la siguiente palabra respecto a la de ahora
                 if seen:
-                    aux = ' '.join(article[first[1] + len(first[0]) + 1:last[1] + z]) + ' '
+                    aux = (
+                        " ".join(article[first[1] + len(first[0]) + 1 : last[1] + z])
+                        + " "
+                    )
                 else:
-                    aux = ' '.join(article[first[1] - j:first[1]])+ ' ' + ' '.join(article[first[1]:last[1] + len(last[0])]) + ' '
-                #Hay dos palabras juntas 
+                    aux = (
+                        " ".join(article[first[1] - j : first[1]])
+                        + " "
+                        + " ".join(article[first[1] : last[1] + len(last[0])])
+                        + " "
+                    )
+                # Hay dos palabras juntas
                 seen = True
-            #La palabra de ahora ya está añadida y no podemos añadir la siguiente
+            # La palabra de ahora ya está añadida y no podemos añadir la siguiente
             elif seen:
-                #Solo ponemos '...'
-                aux = '...'
-                #No he añadido el término posterior
+                # Solo ponemos '...'
+                aux = "..."
+                # No he añadido el término posterior
                 seen = False
-            #Simplemente añadimos 3 palabras a la izquierda y tres a la derecha 
+            # Simplemente añadimos 3 palabras a la izquierda y tres a la derecha
             else:
-                #snippet+'...'
-                aux = ' '.join(article[first[1] - j: first[1] + z]) + '...'
-            #Añadimos a resultado
+                # snippet+'...'
+                aux = " ".join(article[first[1] - j : first[1] + z]) + "..."
+            # Añadimos a resultado
             snippet += aux
-        #El último snippet si no esta en la misma frase que con el penúltimo, repetimos
+        # El último snippet si no esta en la misma frase que con el penúltimo, repetimos
         print(indexes)
         if not seen and indexes != []:
-            #Es el ultimo
+            # Es el ultimo
             aux = indexes[-1]
-            #Añadimos, no pasa nada si nos pasamos del texto por la dereccha python se encarga
-            snippet += ' '.join(article[aux[1] - 3:aux[1]]) + ' ' + ' '.join(article[aux[1]: aux[1] + 3])
+            # Añadimos, no pasa nada si nos pasamos del texto por la dereccha python se encarga
+            snippet += (
+                " ".join(article[aux[1] - 3 : aux[1]])
+                + " "
+                + " ".join(article[aux[1] : aux[1] + 3])
+            )
         return snippet
-        
 
     def rank_result(self, result, query):
         """
@@ -942,7 +984,7 @@ class SAR_Project:
         """
 
         return []
-        
+
         ###################################################
         ## COMPLETAR PARA FUNCIONALIDAD EXTRA DE RANKING ##
         ###################################################

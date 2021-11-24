@@ -94,12 +94,12 @@ class TrieSpellSuggester(SpellSuggester):
         self.trie = Trie(sorted(self.vocabulary))
 
     def suggest(self, term, distance, th=0):
-        if distance == "levensthein":
+        if distance == "levenshtein":
             return dp_levenshtein_trie(term, self.trie, th)
         elif distance == "restricted":
-            return dp_intermediate_damerau_trie(term, self.trie, th)
-        else:
             return dp_restricted_damerau_trie(term, self.trie, th)
+        else:
+            return dp_intermediate_damerau_trie(term, self.trie, th)
     
 
 

@@ -25,7 +25,11 @@ if __name__ == "__main__":
 
     parser.add_argument('-th', '--threshold',dest='threshold', metavar='th', type=int,
                     help = 'threshold to use in case to look up similar terms,\
-                    only useful with "--trie" option or "-distance option"')
+                    only useful with "--trie" option or "--ntrie option". Default value is 3',default=3)
+    parser.add_argument("-D", "--distance", dest="distance", metavar="distance", type=str,
+                        choices=["levenshtein", "restricted", "intermediate"],\
+                        help="distance algorithm to use to similar retrieval. default value is levensthein. choose from [\"levensthein\", \"restricted\", \"intermediate\"]", default="levenshtein")
+
     group0 = parser.add_mutually_exclusive_group()
     
     group0.add_argument('-N', '--snippet', dest='snippet', action='store_true', default=False, 
@@ -52,9 +56,9 @@ if __name__ == "__main__":
     group2 = parser.add_mutually_exclusive_group()
     group2.add_argument("-TR", "--trie",dest='trie',action='store_true',
                         default=False,help="use Trie for retrieval of similar terms in case the desired term.\
-                        it's not present.Only Levensthein distance implemented")
-    group2.add_argument("-D", "--distance", dest='distance',type=str, 
-                        choices=['optimistic','restricted','intermediate'],help="distance to use ")
+                        it's not present")
+    group2.add_argument("-NTR", "--notrie", dest="notrie", action="store_true",
+                        default=False,help="dont use trie for retrieve")
     args = parser.parse_args()
 
     with open(args.index, 'rb') as fh:
@@ -65,7 +69,9 @@ if __name__ == "__main__":
     searcher.set_showall(args.all)
     searcher.set_snippet(args.snippet)
     searcher.set_trie(args.trie)
-
+    searcher.set_vocab(args.notrie)
+    searcher.set_distance(args.distance)
+    searcher.set_threshold(args.threshold)
     # se debe contar o mostrar resultados?
     if args.count is True:
         fnc = searcher.solve_and_count

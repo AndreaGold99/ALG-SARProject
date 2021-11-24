@@ -24,13 +24,13 @@ def dp_levenshtein_trie(x, trie, th):
                 previous[parent] + (letter != trie.get_label(st)),
             )
         if min(current) > th:
-            return {}
+            return []
     
-    aux = {
-        trie.get_output(st): current[st]
+    aux = [
+        (trie.get_output(st), current[st])
         for st in range(trie.get_num_states())
         if trie.is_final(st) and current[st] <= th
-    }
+    ]
     return aux
 
 
@@ -57,13 +57,13 @@ def dp_restricted_damerau_trie(x, trie, th):
                 aux)
 
         if min(current) > th:
-                return {}
+                return []
         last = letter
-    return {
-        trie.get_output(st):current[st]
+    return [
+        (trie.get_output(st),current[st])
         for st in range(trie.get_num_states())
         if trie.is_final(st) and current[st] <= th
-    }
+    ]
 
 
 def dp_intermediate_damerau_trie(y, trie, th):
@@ -96,23 +96,23 @@ def dp_intermediate_damerau_trie(y, trie, th):
                 if j > 1 and y[j-2] == trie.get_label(i) and y[j] == trie.get_label(parent):
                     current[i] = min(previous3[parent2] + 2, current[i])
         if min(current) > th:
-                return {}
+                return []
     
-    return {
-        trie.get_output(st):current[st]
+    return [
+        (trie.get_output(st),current[st])
         for st in range(trie.get_num_states())
         if trie.is_final(st) and current[st] <= th
-    }
+    ]
 
 
 if __name__ == "__main__":
-    words = ["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba"]
+    words = ["algortimo","algortximo", "lagortimo", "agaloritom", "algormio", "ba","capilla","capital"]
 
 
     words.sort()
     trie = Trie(words)
 
-    test = ["algoritmo","acb"]
+    test = ["algoritmo","acb","capitla"]
     thrs = range(1, 4)
     for threshold in thrs:
         print(f"threshols: {threshold:3}")
